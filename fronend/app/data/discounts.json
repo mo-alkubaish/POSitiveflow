@@ -1,0 +1,27 @@
+[
+    {
+      "name": "Summer Sale",
+      "type": "Percentage",
+      "value": "20%",
+      "startDate": "01/12/2023",
+      "endDate": "01/12/2024",
+      "status": "Active"
+    },
+    {
+      "name": "Black Friday",
+      "type": "Fixed Amount",
+      "value": "$50",
+      "startDate": "06/09/2025",
+      "endDate": "06/12/2025",
+      "status": "Scheduled"
+    },
+    {
+      "name": "Loyalty Discount",
+      "type": "Percentage",
+      "value": "10%",
+      "startDate": "12/12/2022",
+      "endDate": "15/12/2022",
+      "status": "Ended"
+    }
+  ]
+  

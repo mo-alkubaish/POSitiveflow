@@ -1,0 +1,43 @@
+[
+    {
+      "productName": "Basbousa",
+      "sku": "SKU001",
+      "price": "$11.99"
+    },
+    {
+      "productName": "Maamoul",
+      "sku": "SKU002",
+      "price": "$12.99"
+    },
+    {
+      "productName": "Knafeh",
+      "sku": "SKU003",
+      "price": "$13.99"
+    },
+    {
+      "productName": "Qatayef",
+      "sku": "SKU004",
+      "price": "$14.99"
+    },
+    {
+      "productName": "Fatayer",
+      "sku": "SKU005",
+      "price": "$15.99"
+    },
+    {
+      "productName": "Khubuz",
+      "sku": "SKU006",
+      "price": "$16.99"
+    },
+    {
+      "productName": "Zattar",
+      "sku": "SKU007",
+      "price": "$17.99"
+    },
+    {
+      "productName": "Cheese",
+      "sku": "SKU008",
+      "price": "$18.99"
+    }
+  ]
+  
