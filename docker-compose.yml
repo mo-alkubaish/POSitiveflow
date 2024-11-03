@@ -20,7 +20,7 @@ services:
 
   frontend:
     build:
-      context: ./frontend
+      context: ./fronend
       dockerfile: Dockerfile
     ports:
       - "3000:3000"
