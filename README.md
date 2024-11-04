@@ -53,8 +53,11 @@ To get the project up and running on your local machine, follow these steps:
    git clone https://github.com/mo-alkubaish/POSitiveflow
    cd POSitiveflow
    docker compose up -d
+<<<<<<< HEAD
    ```
 
+=======
+>>>>>>> 98720e0a3f3ba4246afe18323ec7050ade63699d
 
 ## Contributing
 Contributions are welcome! Please fork the repository and submit pull requests to the develop branch.
