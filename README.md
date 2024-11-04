@@ -53,7 +53,6 @@ To get the project up and running on your local machine, follow these steps:
    git clone https://github.com/mo-alkubaish/POSitiveflow
    cd retail-management-system
 
-
 ## Contributing
 Contributions are welcome! Please fork the repository and submit pull requests to the develop branch.
 
