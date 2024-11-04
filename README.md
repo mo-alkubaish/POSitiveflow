@@ -28,53 +28,32 @@ This Retail Management System is designed to streamline operations and enhance c
 - PostgreSQL or MongoDB as a database
 - Docker for containerization
 
-## Installation
-
-```bash
-git clone https://github.com/yourrepository/retail-management-system](https://github.com/mo-alkubaish/POSitiveflow
-cd retail-management-system
-npm install
-
-# Running the application
-
-# Start the backend
-cd backend
-npm run start
-
-# Start the frontend
-cd frontend
-npm run dev
-
-# Docker Usage
-docker-compose up --build
-
-# Testing
-# Run backend tests
-cd backend
-npm run test
-
-# Run frontend tests
-cd frontend
-npm run test
-
-Contributing
+## Contributing
 Contributions are welcome! Please fork the repository and submit pull requests to the develop branch.
 
-License
+## License
 Distributed under the MIT License. See LICENSE for more information.
 
-Contact
-Abdullah Al Abbas - 202156190
-Osama Alkarnawi - 202183150
-Muhannad Alduraywish - 202024100
-Mohammed Alshowaikhat - 202178490
-Mohammed Alkubaish - 202167510
+## Contact
+- Abdullah Al Abbas - 202156190
+- Osama Alkarnawi - 202183150
+- Muhannad Alduraywish - 202024100
+- Mohammed Alshowaikhat - 202178490
+- Mohammed Alkubaish - 202167510
 
-# Acknowledgments
-WhatsApp API for integration features
-Nest.js framework
-Next.js development team
+## Acknowledgments
+- WhatsApp API for integration features
+- Nest.js framework
+- Next.js development team
 
 
 Feel free to adjust the repository URL, contact emails, and any other specific information to suit your actual setup.
+
+
+## Installation
+
+```bash
+git clone https://github.com/yourrepository/retail-management-system
+cd retail-management-system
+npm install
 
