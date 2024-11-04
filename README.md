@@ -1,8 +1,8 @@
-# Retail Management System
+# POSitiveFlow
 
 ## Overview
 
-This Retail Management System is designed to streamline operations and enhance customer experiences for small to medium-sized businesses. Utilizing modern technologies such as Next.js for responsive frontend and Nest.js for scalable backend services, this system integrates seamlessly with WhatsApp for sending digital receipts and managing customer loyalty programs.
+POSitiveFlow is designed to streamline operations and enhance customer experiences for small to medium-sized businesses. Utilizing modern technologies such as Next.js for responsive frontend and Nest.js for scalable backend services, this system integrates seamlessly with WhatsApp for sending digital receipts and managing customer loyalty programs.
 
 ## Features
 
