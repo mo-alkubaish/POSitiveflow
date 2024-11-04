@@ -1,9 +1,10 @@
 "use client";
 
 import React, { useState } from "react";
+import { motion } from 'framer-motion';
 import Navbar from "../components/Navbar";
 import SettingsForm from "./settingsForm";
-import BackupSection from "./backupSection";
+import BackupSection from "./BackupSection";
 
 const Settings = () => {
   const [storeName, setStoreName] = useState("Ajjad Bakery");
@@ -13,6 +14,11 @@ const Settings = () => {
   const [whatsappReceipts, setWhatsappReceipts] = useState(false);
   const [loyaltyPoints, setLoyaltyPoints] = useState(false);
 
+  const containerVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0, transition: { delay: 0.0, duration: 0.5 } }
+  };
+
   return (
     <div className="bg-gray-100 min-h-screen">
       <Navbar />
@@ -20,7 +26,12 @@ const Settings = () => {
         href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
         rel="stylesheet"
       />
-      <div className="container mx-auto p-6">
+      <motion.div
+        className="container mx-auto p-6"
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+      >
         {/* Settings Form */}
         <SettingsForm
           storeName={storeName}
@@ -39,7 +50,7 @@ const Settings = () => {
 
         {/* Backup Section */}
         <BackupSection />
-      </div>
+      </motion.div>
     </div>
   );
 };
