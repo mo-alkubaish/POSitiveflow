@@ -7,51 +7,52 @@ POSitiveFlow is designed to streamline operations and enhance customer experienc
 ## Features
 
 ### Store Owners/Managers
-- Full system access: Manage users, permissions, sales, inventory, and reports.
-- Customer relations: Track and manage customer loyalty points and rewards.
+•⁠  ⁠Full system access: Manage users, permissions, sales, inventory, and reports.
+•⁠  ⁠Customer relations: Track and manage customer loyalty points and rewards.
 
 ### Cashiers
-- Sales processing: Handle transactions, apply discounts, calculate VAT, and send digital receipts via WhatsApp.
-- Shift management: Perform cash-up and reconciliation at the end of shifts.
+•⁠  ⁠Sales processing: Handle transactions, apply discounts, calculate VAT, and send digital receipts via WhatsApp.
+•⁠  ⁠Shift management: Perform cash-up and reconciliation at the end of shifts.
 
 ### Inventory Managers
-- Inventory control: Update and manage stock levels, handle supplier information, and generate barcodes.
+•⁠  ⁠Inventory control: Update and manage stock levels, handle supplier information, and generate barcodes.
 
 ### Customers
-- Engagement tools: Receive digital receipts and participate in loyalty programs.
+•⁠  ⁠Engagement tools: Receive digital receipts and participate in loyalty programs.
 
 ## Project Structure
 
 Below is an overview of the main folders and files in the project:
 
-- `/backend`: Contains all the server-side logic using Nest.js.
-  - `/src`: Source files for the backend.
-  - `/test`: Tests for backend functionalities.
-  - `nest-cli.json`: Nest.js CLI configuration.
-  - `Dockerfile`: Docker configuration for backend setup.
-- `/frontend`: Contains the Next.js frontend application.
-  - `/pages`: React components that correspond to web pages.
-  - `/components`: Reusable UI components.
-  - `/public`: Static assets like images and fonts.
-  - `next.config.ts`: Configuration file for Next.js.
-- `docker-compose.yml`: Docker Compose configuration to run the entire application.
+•⁠  ⁠⁠ /backend ⁠: Contains all the server-side logic using Nest.js.
+  - ⁠ /src ⁠: Source files for the backend.
+  - ⁠ /test ⁠: Tests for backend functionalities.
+  - ⁠ nest-cli.json ⁠: Nest.js CLI configuration.
+  - ⁠ Dockerfile ⁠: Docker configuration for backend setup.
+•⁠  ⁠⁠ /frontend ⁠: Contains the Next.js frontend application.
+  - ⁠ /pages ⁠: React components that correspond to web pages.
+  - ⁠ /components ⁠: Reusable UI components.
+  - ⁠ /public ⁠: Static assets like images and fonts.
+  - ⁠ next.config.ts ⁠: Configuration file for Next.js.
+•⁠  ⁠⁠ docker-compose.yml ⁠: Docker Compose configuration to run the entire application.
 
 ## Prerequisites
 
 Before you begin, ensure you have the following installed:
-- Node.js (version 14 or above)
-- Docker (for containerization)
-- Git (for version control)
+•⁠  ⁠Node.js (version 18 or above)
+•⁠  ⁠Docker (for containerization)
+•⁠  ⁠Git (for version control)
 
 ## Setup Instructions
 
 To get the project up and running on your local machine, follow these steps:
 
-1. **Clone the repository:**
+1.⁠ ⁠*Clone the repository:*
 
    ```bash
    git clone https://github.com/mo-alkubaish/POSitiveflow
-   cd retail-management-system
+   cd POSitiveflow
+   docker compose up -d
 
 ## Contributing
 Contributions are welcome! Please fork the repository and submit pull requests to the develop branch.
@@ -60,16 +61,16 @@ Contributions are welcome! Please fork the repository and submit pull requests t
 Distributed under the MIT License. See LICENSE for more information.
 
 ## Contact
-- Abdullah Al Abbas - 202156190
-- Osama Alkarnawi - 202183150
-- Muhannad Alduraywish - 202024100
-- Mohammed Alshowaikhat - 202178490
-- Mohammed Alkubaish - 202167510
+•⁠  ⁠Abdullah Al Abbas - 202156190
+•⁠  ⁠Osama Alkarnawi - 202183150
+•⁠  ⁠Muhannad Alduraywish - 202024100
+•⁠  ⁠Mohammed Alshowaikhat - 202178490
+•⁠  ⁠Mohammed Alkubaish - 202167510
 
 ## Acknowledgments
-- WhatsApp API for integration features
-- Nest.js framework
-- Next.js development team
+•⁠  ⁠WhatsApp API for integration features
+•⁠  ⁠Nest.js backend framework
+•⁠  ⁠Next.js frontend framework
 
 
 Feel free to adjust the repository URL and any other specific information to suit your actual setup.
