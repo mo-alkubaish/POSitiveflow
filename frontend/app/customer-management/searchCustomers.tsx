@@ -1,4 +1,3 @@
-// searchCustomers.js
 
 const searchCustomers = (customers, searchTerm) => {
     if (!searchTerm) return customers;

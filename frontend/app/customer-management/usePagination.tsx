@@ -1,4 +1,3 @@
-// src/hooks/usePagination.ts
 import { useState } from 'react';
 
 function usePagination(totalItems: number, itemsPerPage: number) {
