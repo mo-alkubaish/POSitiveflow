@@ -56,9 +56,6 @@ To get the project up and running on your local machine, follow these steps:
 <<<<<<< HEAD
    ```
 
-=======
->>>>>>> 98720e0a3f3ba4246afe18323ec7050ade63699d
-
 ## Contributing
 Contributions are welcome! Please fork the repository and submit pull requests to the develop branch.
 
