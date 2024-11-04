@@ -20,13 +20,39 @@ This Retail Management System is designed to streamline operations and enhance c
 ### Customers
 - Engagement tools: Receive digital receipts and participate in loyalty programs.
 
-## Technical Requirements
+## Project Structure
 
-- Node.js 14 or higher
-- Next.js for the frontend
-- Nest.js for the backend API
-- PostgreSQL or MongoDB as a database
-- Docker for containerization
+Below is an overview of the main folders and files in the project:
+
+- `/backend`: Contains all the server-side logic using Nest.js.
+  - `/src`: Source files for the backend.
+  - `/test`: Tests for backend functionalities.
+  - `nest-cli.json`: Nest.js CLI configuration.
+  - `Dockerfile`: Docker configuration for backend setup.
+- `/frontend`: Contains the Next.js frontend application.
+  - `/pages`: React components that correspond to web pages.
+  - `/components`: Reusable UI components.
+  - `/public`: Static assets like images and fonts.
+  - `next.config.ts`: Configuration file for Next.js.
+- `docker-compose.yml`: Docker Compose configuration to run the entire application.
+
+## Prerequisites
+
+Before you begin, ensure you have the following installed:
+- Node.js (version 14 or above)
+- Docker (for containerization)
+- Git (for version control)
+
+## Setup Instructions
+
+To get the project up and running on your local machine, follow these steps:
+
+1. **Clone the repository:**
+
+   ```bash
+   git clone https://github.com/yourrepository/retail-management-system
+   cd retail-management-system
+
 
 ## Contributing
 Contributions are welcome! Please fork the repository and submit pull requests to the develop branch.
@@ -47,13 +73,4 @@ Distributed under the MIT License. See LICENSE for more information.
 - Next.js development team
 
 
-Feel free to adjust the repository URL, contact emails, and any other specific information to suit your actual setup.
-
-
-## Installation
-
-```bash
-git clone https://github.com/yourrepository/retail-management-system
-cd retail-management-system
-npm install
-
+Feel free to adjust the repository URL and any other specific information to suit your actual setup.
