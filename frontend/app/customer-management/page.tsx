@@ -1,3 +1,14 @@
+/**
+ * CustomerManagement component provides an interface for managing customer records. It includes:
+ * - Search functionality to filter customers by name or other attributes.
+ * - Pagination to manage large lists of customers.
+ * - Modals for adding, editing, and deleting customers with validation and confirmation.
+ * - Action buttons for each customer entry, enabling editing or deletion.
+ * 
+ * This component leverages useState for state management, Framer Motion for animations, and custom hooks for pagination.
+ */
+
+
 "use client";
 import React, { useState } from 'react';
 import Navbar from "../components/Navbar";
@@ -8,13 +19,15 @@ import usePagination from "./usePagination";
 import { motion } from 'framer-motion';
 import EditModal from './EditModal'; 
 import DeleteConfirmationModal from './DeleteConfirmationModal'; 
+import AddCustomerModal from './AddCustomerModal';
 
 const CustomerManagement = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [customers, setCustomers] = useState(customersData);
   const [editableCustomer, setEditableCustomer] = useState(null);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [selectedCustomer, setSelectedCustomer] = useState(null);
 
   const filteredCustomers = searchCustomers(customers, searchTerm);
@@ -37,29 +50,53 @@ const CustomerManagement = () => {
     setIsEditModalOpen(false);
   };
   
+  const handleAddCustomer = (newCustomer) => {
+    const customerWithDefaults = {
+      ...newCustomer,
+      loyaltyPoints: newCustomer.loyaltyPoints || 0,
+      phone: newCustomer.phoneNumber === '' ? 'N/A' : newCustomer.phoneNumber,
+      lastPurchase: newCustomer.lastPurchase || 'No purchases'
+    };    
+    setCustomers([...customers, customerWithDefaults]);
+    setIsAddModalOpen(false);
+  };
 
   const handleDeleteClick = (customer) => {
     setSelectedCustomer(customer);
-    setIsModalOpen(true);
+    setIsDeleteModalOpen(true);
   };
 
   const handleCancel = () => {
     setIsEditModalOpen(false);
-    setEditableCustomer(null); // Optionally reset the editable customer
+    setIsDeleteModalOpen(false);
+    setIsAddModalOpen(false);
+    setEditableCustomer(null); 
   };
   
-
   const handleDeleteConfirm = () => {
     const updatedCustomers = customers.filter(c => c.email !== selectedCustomer.email);
     setCustomers(updatedCustomers);
-    setIsModalOpen(false);
+    setIsDeleteModalOpen(false);
+  };
+
+  const tableVariants = {
+    initial: { opacity: 0, y: 20 },
+    animate: { opacity: 1, y: 0 },
+    exit: { opacity: 0, y: -20 },
   };
 
   return (
     <div className="bg-gray-100 min-h-screen">
       <Navbar />
       <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
-      <div className="container mx-auto p-6">
+      <motion.div
+        className="container mx-auto p-6"
+        initial="initial"
+        animate="animate"
+        exit="exit"
+        variants={tableVariants}
+        transition={{ duration: 0.3, ease: "easeOut" }}
+      >
         <div className="bg-white shadow-lg rounded-xl p-6">
           <div className="flex items-center justify-between mb-4">
             <h1 className="text-2xl font-bold text-black">All Customers</h1>
@@ -76,7 +113,7 @@ const CustomerManagement = () => {
                   onChange={e => setSearchTerm(e.target.value)}
                 />
               </div>
-              <button className="btn btn-outline text-black bg-gray-50 border-gray-300 hover:bg-gray-100">Add Customer</button>
+              <button className="btn btn-outline text-black bg-gray-50 border-gray-300 hover:bg-gray-100" onClick={() => setIsAddModalOpen(true)}>Add Customer</button>
             </div>
           </div>
 
@@ -94,13 +131,7 @@ const CustomerManagement = () => {
               </thead>
               <tbody>
                 {currentItems.map((customer, index) => (
-                  <motion.tr
-                    key={index}
-                    initial={{ opacity: 0, x: -10 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: 10 }}
-                    className="bg-white hover:bg-gray-50 shadow-sm rounded-lg"
-                  >
+                  <tr key={index} className="bg-white hover:bg-gray-50 shadow-sm rounded-lg">
                     <td className="py-3 px-4 text-black">{customer.name}</td>
                     <td className="py-3 px-4 text-black">{customer.loyaltyPoints}</td>
                     <td className="py-3 px-4 text-black">{customer.phone}</td>
@@ -110,7 +141,7 @@ const CustomerManagement = () => {
                       <button className="text-gray-500 hover:text-gray-700" onClick={() => handleEditClick(customer)}>Edit</button>
                       <button className="text-gray-500 hover:text-gray-700" onClick={() => handleDeleteClick(customer)}>Delete</button>
                     </td>
-                  </motion.tr>
+                  </tr>
                 ))}
               </tbody>
             </table>
@@ -124,9 +155,15 @@ const CustomerManagement = () => {
           />
 
           <DeleteConfirmationModal
-            isOpen={isModalOpen}
+            isOpen={isDeleteModalOpen}
             onCancel={handleCancel}
             onConfirm={handleDeleteConfirm}
+          />
+
+          <AddCustomerModal
+            isOpen={isAddModalOpen}
+            onClose={handleCancel}
+            onSave={handleAddCustomer}
           />
 
           <div className="flex justify-between items-center mt-6 text-sm text-gray-500">
@@ -146,7 +183,7 @@ const CustomerManagement = () => {
             </div>
           </div>
         </div>
-      </div>
+      </motion.div>
     </div>
   );
 };

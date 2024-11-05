@@ -1,4 +1,31 @@
-// UserManagement.tsx
+/**
+ * UserManagement component provides a comprehensive interface for managing users, with options to add, edit, search, and delete users.
+ * 
+ * Features:
+ * - Search: Filters users by name, email, or role, updating the displayed results in real time.
+ * - Pagination: Displays users in paginated format, with controls to navigate pages.
+ * - User List: Shows user details (name, email, role) in a table, with actions to edit or delete each user.
+ * - Modals: 
+ *    - `AddUserModal`: For adding a new user.
+ *    - `EditModal`: For editing existing user details.
+ *    - Confirmation modal for delete action.
+ * 
+ * State Management:
+ * - `searchTerm`: Controls the search input, filtering the displayed users.
+ * - `users`: Maintains the current list of users, including updates after add, edit, and delete actions.
+ * - `isModalOpen`, `isEditModalOpen`, `isAddModalOpen`: Boolean states to manage modal visibility.
+ * - `selectedUser`: Stores the user currently selected for editing or deletion.
+ * 
+ * Effects:
+ * - Clears local storage upon component mount to reset any cached data.
+ * 
+ * Animations:
+ * - Applies fade-in animation to the user list for a smooth loading experience using Framer Motion.
+ * 
+ * This component provides a streamlined interface for managing user data with feedback-driven modals and organized pagination.
+ */
+
+
 "use client";
 import React, { useState, useEffect } from "react";
 import Navbar from "../components/Navbar";
@@ -7,16 +34,18 @@ import searchUsers from "./searchUsers";
 import usersData from "../data/users.json";
 import usePagination from "./usePagination";
 import { motion } from "framer-motion";
-import EditModal, { User } from './editModal';
+import EditModal from '../user-management/editModal';
+import AddUserModal from './AddUserModal'; 
 
 const UserManagement = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isEditModalOpen, setIsEditModalOpen] = useState(false);  // State to manage edit modal visibility
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false);  
   const [selectedUser, setSelectedUser] = useState(null);
 
   useEffect(() => {
-    localStorage.clear(); // Clears all localStorage data
+    localStorage.clear(); 
     console.log('Local storage cleared on page reload.');
   }, []);
 
@@ -53,11 +82,30 @@ const UserManagement = () => {
     setIsEditModalOpen(false);
   };
 
+  const handleAddUser = (newUser) => {
+    setUsers([...users, newUser]); 
+    setIsAddModalOpen(false);
+  };
+
+  const tableVariants = {
+    initial: { opacity: 0, y: 20 },
+    animate: { opacity: 1, y: 0 },
+    exit: { opacity: 0, y: -20 },
+  };
+
   return (
     <div className="bg-gray-100 min-h-screen">
       <Navbar />
       <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
-      <div className="container mx-auto p-6">
+      
+      <motion.div
+        className="container mx-auto p-6"
+        initial="initial"
+        animate="animate"
+        exit="exit"
+        variants={tableVariants}
+        transition={{ duration: 0.3, ease: "easeOut" }}
+      >
         <div className="bg-white shadow-lg rounded-xl p-6">
           <div className="flex items-center justify-between mb-4">
             <h1 className="text-2xl font-bold text-black">User Management</h1>
@@ -74,7 +122,7 @@ const UserManagement = () => {
                   onChange={(e) => setSearchTerm(e.target.value)}
                 />
               </div>
-              <button className="btn btn-outline text-black bg-gray-50 border-gray-300 hover:bg-gray-100">Add User</button>
+              <button className="btn btn-outline text-black bg-gray-50 border-gray-300 hover:bg-gray-100" onClick={() => setIsAddModalOpen(true)}>Add User</button>
             </div>
           </div>
 
@@ -89,30 +137,24 @@ const UserManagement = () => {
                 </tr>
               </thead>
               <tbody>
-  {currentItems.length > 0 ? (
-    currentItems.map((user, index) => (
-      <motion.tr
-        key={index}
-        initial={{ opacity: 0, x: -10 }}
-        animate={{ opacity: 1, x: 0 }}
-        exit={{ opacity: 0, x: 10 }}
-        className="bg-white hover:bg-gray-50 shadow-sm rounded-lg"
-      >
-        <td className="py-3 px-4 text-black">{user.name}</td>
-        <td className="py-3 px-4 text-black">{user.email}</td>
-        <td className="py-3 px-4 text-black">{user.role}</td>
-        <td className="py-3 px-4 text-right space-x-2">
-          <button className="text-gray-500 hover:text-gray-700" onClick={() => handleEditClick(user)}>Edit</button>
-          <button className="text-gray-500 hover:text-gray-700" onClick={() => handleDeleteClick(user)}>Delete</button>
-        </td>
-      </motion.tr>
-    ))
-  ) : (
-    <tr>
-      <td colSpan={4} className="text-center text-xl font-bold py-8 text-black">User not found...</td>
-    </tr>
-  )}
-</tbody>
+                {currentItems.length > 0 ? (
+                  currentItems.map((user, index) => (
+                    <tr key={index} className="bg-white hover:bg-gray-50 shadow-sm rounded-lg">
+                      <td className="py-3 px-4 text-black">{user.name}</td>
+                      <td className="py-3 px-4 text-black">{user.email}</td>
+                      <td className="py-3 px-4 text-black">{user.role}</td>
+                      <td className="py-3 px-4 text-right space-x-2">
+                        <button className="text-gray-500 hover:text-gray-700" onClick={() => handleEditClick(user)}>Edit</button>
+                        <button className="text-gray-500 hover:text-gray-700" onClick={() => handleDeleteClick(user)}>Delete</button>
+                      </td>
+                    </tr>
+                  ))
+                ) : (
+                  <tr>
+                    <td colSpan={4} className="text-center text-xl font-bold py-8 text-black">No users found...</td>
+                  </tr>
+                )}
+              </tbody>
             </table>
           </div>
 
@@ -133,36 +175,17 @@ const UserManagement = () => {
             </div>
           </div>
 
-          {/* Modal for Delete Confirmation */}
+          {/* Modals */}
           {isModalOpen && (
             <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
               <div className="bg-white p-4 rounded-lg shadow-xl">
                 <h2 className="text-lg font-semibold text-black">Confirm Delete User</h2>
-                <p className="my-4 text-gray-500"> Once you delete this user, the action cannot be undone, and all related data will be permanently lost.</p>
+                <p className="my-4 text-gray-500">Once you delete this user, the action cannot be undone, and all related data will be permanently lost.</p>
                 <div className="flex justify-end space-x-4">
-                  <button
-                    onClick={handleCancel}
-                    style={{
-                      backgroundColor: 'white',
-                      color: 'black',
-                      border: '1px solid #d1d5db',
-                      padding: '8px 16px',
-                      borderRadius: '0.375rem'
-                    }}
-                    className="hover:bg-gray-100"
-                  >
+                  <button onClick={handleCancel} className="hover:bg-gray-100 text-black font-semibold py-2 px-4 rounded border border-gray-300">
                     Cancel
                   </button>
-                  <button
-                    onClick={handleDeleteConfirm}
-                    style={{
-                      backgroundColor: '#1f2937',
-                      color: 'white',
-                      padding: '8px 16px',
-                      borderRadius: '0.375rem'
-                    }}
-                    className="hover:bg-gray-900"
-                  >
+                  <button onClick={handleDeleteConfirm} className="hover:bg-gray-900 text-white font-semibold py-2 px-4 rounded bg-black">
                     Delete User
                   </button>
                 </div>
@@ -170,21 +193,24 @@ const UserManagement = () => {
             </div>
           )}
 
-          {/* Edit Modal Component */}
           {isEditModalOpen && selectedUser && (
             <EditModal
               user={selectedUser}
               isOpen={isEditModalOpen}
-              onClose={() => {
-                setIsEditModalOpen(false);
-                setSelectedUser(null);
-              }}
+              onClose={() => setIsEditModalOpen(false)}
               onSave={handleSaveChanges}
             />
           )}
 
+          {isAddModalOpen && (
+            <AddUserModal
+              isOpen={isAddModalOpen}
+              onClose={() => setIsAddModalOpen(false)}
+              onSave={handleAddUser}
+            />
+          )}
         </div>
-      </div>
+      </motion.div>
     </div>
   );
 };

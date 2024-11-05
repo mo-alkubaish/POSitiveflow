@@ -1,3 +1,18 @@
+/**
+ * FeaturesSection component showcases the main features of the platform.
+ * 
+ * Structure:
+ * - Title and description introduce the section with smooth entrance animations.
+ * - Displays three feature cards: Inventory Management, Sales Analytics, and Customer Loyalty.
+ * 
+ * Features:
+ * - Each feature card has an icon, title, and description, animated to appear when scrolled into view.
+ * - Uses Framer Motion for entrance animations with staggered delays to enhance visual flow.
+ * 
+ * This section aims to highlight the platform's key capabilities, providing users with a clear overview of its tools.
+ */
+
+
 import React from 'react';
 import { ClipboardIcon, ChartBarIcon, StarIcon } from '@heroicons/react/24/solid';
 import { motion } from 'framer-motion';

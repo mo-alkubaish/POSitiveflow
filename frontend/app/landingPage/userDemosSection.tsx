@@ -1,3 +1,26 @@
+/**
+ * UserDemosSection component provides an interactive display of key features for different user roles in POSitiveFlow.
+ * 
+ * Features:
+ * - Title and description introduce the section with animations.
+ * - Role selection buttons allow users to toggle between different roles (e.g., Store Owner, Cashier).
+ * - Each role displays a unique description and feature list relevant to that user type, rendered as an animated list.
+ * - "Go to Demo" button navigates to the relevant page for the selected role.
+ * 
+ * Animations:
+ * - Framer Motion animations add smooth transitions to the title, description, role buttons, feature list, and navigation button.
+ * 
+ * Props:
+ * - `toggleTheme` (function): Callback to switch between light and dark themes.
+ * - `toggleLanguage` (function): Callback to change the language.
+ *
+ * State:
+ * - `selectedRole` (string): Tracks the currently selected user role to display the corresponding features.
+ *
+ * This section is designed to offer users a preview of role-specific features, enhancing understanding of the platform's versatility.
+ */
+
+
 "use client";
 
 import React, { useState } from "react";

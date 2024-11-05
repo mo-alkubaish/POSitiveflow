@@ -1,6 +1,20 @@
+/**
+ * TestimonialsSection component displays client testimonials with animated entrances.
+ * 
+ * Features:
+ * - Section Title: "What Our Clients Say," with an animated fade-in effect.
+ * - Testimonials: Renders each testimonial from a JSON data file in a card format, displayed side-by-side on larger screens.
+ * - Each card includes a testimonial text, client's name, and an icon, with smooth fade-in animations staggered by index for visual appeal.
+ * 
+ * Animations:
+ * - Title and each testimonial card fade in sequentially using Framer Motion, creating a dynamic user experience.
+ * 
+ * This section is designed to build trust with new users by showcasing positive client feedback.
+ */
+
 import React from 'react';
 import { motion } from 'framer-motion';
-import testimonials from './data/testimonials.json'; // Adjust path if necessary
+import testimonials from '../data/testimonials.json'; 
 
 const TestimonialsSection = () => {
     return (
@@ -11,7 +25,7 @@ const TestimonialsSection = () => {
             className="text-4xl font-bold text-success mb-10"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
+            transition={{ duration: 0.4}}
           >
             What Our Clients Say
           </motion.h2>
@@ -24,10 +38,9 @@ const TestimonialsSection = () => {
                 className="card bg-base-100 shadow-lg w-80 p-6 relative text-gray-700"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.2, duration: 0.6 }}
+                transition={{ delay: index * 0.2, duration: 0.4}}
               >
                 <div className="card-body relative">
-                  {/* Custom SVG Quote Icon */}
                   <div className="absolute top-0 left-0 transform -translate-x-1/2 -translate-y-1/2 bg-white rounded-full p-1 shadow">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"

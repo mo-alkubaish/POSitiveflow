@@ -1,3 +1,15 @@
+/**
+ * BackupSection component provides an overview and management tools for automated backups.
+ * 
+ * Features:
+ * - Backup Status: Displays last successful backup, next scheduled backup, and current backup health status.
+ * - BackupDetailsTable: Table displaying detailed information about past backups.
+ * - BackupSettings: Form to configure backup preferences, including frequency, time, and retention period.
+ * 
+ * This component serves as a comprehensive interface for monitoring and adjusting backup-related settings and statuses, ensuring data safety and reliability.
+ */
+
+
 import React from "react";
 import BackupDetailsTable from "./BackupDetailsTable"
 import BackupSettings from "./BackupSettings"; 
@@ -23,11 +35,7 @@ const BackupSection = () => {
           <p className="text-xl font-semibold text-black">Healthy</p>
         </div>
       </div>
-
-      {/* Backup Details Table */}
       <BackupDetailsTable />
-
-      {/* Backup Settings */}
       <BackupSettings />
     </div>
   );

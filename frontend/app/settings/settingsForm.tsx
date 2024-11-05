@@ -1,4 +1,24 @@
-import React from "react";
+/**
+ * SettingsForm component provides an interface for updating store settings, such as store name, currency, tax rate, and stock threshold.
+ * 
+ * Features:
+ * - Store Details: Allows input for store name and currency selection.
+ * - Tax and Stock Settings: Fields for specifying the default tax rate and low stock alert threshold.
+ * - Additional Options: Toggles for enabling WhatsApp receipts and loyalty points.
+ * 
+ * Snackbar Notification:
+ * - Displays a temporary confirmation message upon saving changes, with a fading animation and progress bar to indicate duration.
+ * - Progress is managed by a timer in `useEffect`, which reduces the progress bar width over time.
+ * 
+ * State Management:
+ * - Various states manage form inputs, while a `showSnackbar` function triggers the snackbar display.
+ * - Settings values are controlled by props, enabling updates in real-time as users interact with the form.
+ * 
+ * This component ensures a user-friendly experience for configuring store settings, providing immediate feedback for saved changes.
+ */
+
+
+import React, { useState, useEffect } from "react";
 
 const SettingsForm = ({
   storeName,
@@ -14,6 +34,38 @@ const SettingsForm = ({
   loyaltyPoints,
   setLoyaltyPoints,
 }) => {
+  const [snackbar, setSnackbar] = useState({ show: false, message: '' });
+  const [progress, setProgress] = useState(100); 
+  const [animate, setAnimate] = useState('');
+
+  const showSnackbar = (message) => {
+    setSnackbar({ show: true, message });
+    setProgress(100);
+    setAnimate('animate-fade-in');
+
+    setTimeout(() => {
+      setAnimate('animate-fade-out');
+      setTimeout(() => {
+        setSnackbar({ show: false, message: '' });
+        setAnimate(''); 
+      }, 500); 
+    }, 3000);
+  };
+
+  useEffect(() => {
+    if (snackbar.show) {
+      const interval = setInterval(() => {
+        setProgress((prev) => Math.max(prev - 1, 0)); 
+      }, 30);
+
+      return () => clearInterval(interval);
+    }
+  }, [snackbar.show]);
+
+  const handleSaveChanges = () => {
+    showSnackbar('Changes Saved Successfully!');
+  };
+
   return (
     <div className="bg-white shadow-lg rounded-xl p-6 mb-6">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -98,8 +150,23 @@ const SettingsForm = ({
           </div>
         </div>
 
-        <button className="btn bg-black text-white">Save Changes</button>
+        <button className="btn bg-black text-white" onClick={handleSaveChanges}>
+          Save Changes
+        </button>
       </div>
+
+      {/* Snackbar with animation */}
+      {snackbar.show && (
+        <div
+          className={`fixed bottom-0 left-1/2 transform -translate-x-1/2 mb-4 px-6 py-3 bg-black text-white rounded w-80 ${animate}`}
+        >
+          {snackbar.message}
+          <div
+            className="h-1 bg-green-500 mt-2"
+            style={{ width: `${progress}%`, transition: "width 0.03s linear" }}
+          ></div>
+        </div>
+      )}
     </div>
   );
 };

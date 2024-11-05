@@ -1,3 +1,9 @@
+/**
+ * Renders a modal for confirming customer deletion. It provides 'Cancel' and 'Delete Customer' options.
+ * The modal appears conditionally based on the 'isOpen' prop and offers a warning about the irreversible nature of the deletion.
+ */
+
+
 import React from 'react';
 
 function DeleteConfirmationModal({ isOpen, onCancel, onConfirm }) {

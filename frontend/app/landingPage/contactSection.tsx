@@ -1,3 +1,18 @@
+/**
+ * ContactSection component provides a section for users to get in touch.
+ * 
+ * Features:
+ * - Animated title and description using Framer Motion for smooth entrance effects.
+ * - Simple email input field with a "Subscribe" button for users to contact or subscribe.
+ * 
+ * Layout:
+ * - Title and description are centered with a short animation on scroll.
+ * - Input field and button are styled for focus and hover effects.
+ * 
+ * This section serves as the final call-to-action, inviting user engagement.
+ */
+
+
 import React from 'react';
 import { motion } from 'framer-motion';
 

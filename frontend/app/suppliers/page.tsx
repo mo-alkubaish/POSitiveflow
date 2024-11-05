@@ -4,14 +4,12 @@ import React from "react";
 import Navbar from "../components/Navbar";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/solid";
 
-// Define the Supplier type
 type Supplier = {
   name: string;
   email: string;
   phone: string;
 };
 
-// Import suppliers data and cast it to an array of Supplier
 import suppliersData from "../data/suppliers.json";
 const suppliers: Supplier[] = suppliersData as Supplier[];
 

@@ -42,128 +42,128 @@
   {
       "name": "Aisha Al-Mazroui",
       "email": "aisha@apple.com",
-      "role": "Sales Associate"
+      "role": "Cashier"
   },
   {
       "name": "Nasser Al-Khouri",
       "email": "nasser@ibm.com",
-      "role": "Technical Support"
+      "role": "Cashier"
   },
   {
       "name": "Fatima Al-Qasimi",
       "email": "fatima@nvidia.com",
-      "role": "Quality Assurance"
+      "role": "Cashier"
   },
   {
       "name": "Yousef Al-Fahim",
       "email": "yousef@amazon.com",
-      "role": "Marketing Manager"
+      "role": "Cashier"
   },
   {
       "name": "Salma Al-Farsi",
       "email": "salma@oracle.com",
-      "role": "Human Resources"
+      "role": "Cashier"
   }
 ,
     {
         "name": "Hani Al-Naimi",
         "email": "hani@spotify.com",
-        "role": "Technical Support"
+        "role": "Cashier"
     },
     {
         "name": "Layla Al-Masri",
         "email": "layla@linkedin.com",
-        "role": "Marketing Manager"
+        "role": "Cashier"
     },
     {
         "name": "Mona Al-Shahrani",
         "email": "mona@netflix.com",
-        "role": "Product Manager"
+        "role": "Cashier"
     },
     {
         "name": "Ali Al-Ahmadi",
         "email": "ali@twitter.com",
-        "role": "Data Analyst"
+        "role": "Cashier"
     },
     {
         "name": "Lamar Al-Hamad",
         "email": "lamar@intel.com",
-        "role": "Software Engineer"
+        "role": "Cashier"
     },
     {
         "name": "Zaid Al-Khalifa",
         "email": "zaid@hp.com",
-        "role": "Technical Support"
+        "role": "Cashier"
     },
     {
         "name": "Reem Al-Saud",
         "email": "reem@adobe.com",
-        "role": "Graphic Designer"
+        "role": "Cashier"
     },
     {
         "name": "Sultan Al-Qahtani",
         "email": "sultan@ebay.com",
-        "role": "Sales Manager"
+        "role": "Store Manager"
     },
     {
         "name": "Fatimah Al-Harbi",
         "email": "fatimah@paypal.com",
-        "role": "Accountant"
+        "role": "Store Manager"
     },
     {
         "name": "Sami Al-Muhairi",
         "email": "sami@tesla.com",
-        "role": "Mechanical Engineer"
+        "role": "Store Manager"
     },
     {
         "name": "Noura Al-Thani",
         "email": "noura@airbnb.com",
-        "role": "Customer Service"
+        "role": "Store Manager"
     },
     {
         "name": "Khaled Al-Mansouri",
         "email": "khaled@amazon.com",
-        "role": "Logistics Manager"
+        "role": "Store Manager"
     },
     {
         "name": "Mariam Al-Roomi",
         "email": "mariam@uber.com",
-        "role": "Operations Manager"
+        "role": "Store Manager"
     },
     {
         "name": "Basel Al-Shehhi",
         "email": "basel@apple.com",
-        "role": "Product Specialist"
+        "role": "Store Manager"
     },
     {
         "name": "Sara Al-Kuwari",
         "email": "sara@microsoft.com",
-        "role": "HR Coordinator"
+        "role": "Inventory Manager"
     },
     {
         "name": "Ammar Al-Hosani",
         "email": "ammar@ibm.com",
-        "role": "Project Manager"
+        "role": "Store Manager"
     },
     {
         "name": "Maha Al-Ali",
         "email": "maha@facebook.com",
-        "role": "Social Media Coordinator"
+        "role": "Inventory Manager"
     },
     {
         "name": "Hamad Al-Falasi",
         "email": "hamad@snapchat.com",
-        "role": "Content Creator"
+        "role": "Inventory Manager"
     },
     {
         "name": "Noor Al-Din",
         "email": "noor@google.com",
-        "role": "Research Scientist"
+        "role": "Cashier"
     },
     {
         "name": "Jameela Al-Khouri",
         "email": "jameela@oracle.com",
-        "role": "Database Administrator"
+        "role": "Cashier"
     }
 
 

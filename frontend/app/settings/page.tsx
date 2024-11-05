@@ -1,10 +1,27 @@
+/**
+ * Settings component provides a configuration interface for store settings in the application.
+ * 
+ * Features:
+ * - Displays a form (`SettingsForm`) to update settings such as store name, currency, tax rate, stock threshold, and feature toggles for WhatsApp receipts and loyalty points.
+ * - Includes a `BackupSection` to manage data backup functionalities.
+ * 
+ * State Management:
+ * - Uses React state to manage settings values, which are passed down to `SettingsForm` for real-time updates.
+ * 
+ * Animations:
+ * - Framer Motion is used to apply a fade-in effect to the settings container for a smooth user experience.
+ * 
+ * This component provides an organized interface for managing store-level configurations in POSitiveFlow.
+ */
+
+
 "use client";
 
 import React, { useState } from "react";
 import { motion } from 'framer-motion';
 import Navbar from "../components/Navbar";
 import SettingsForm from "./settingsForm";
-import BackupSection from "./BackupSection";
+import BackupSection from "./backupSection";
 
 const Settings = () => {
   const [storeName, setStoreName] = useState("Ajjad Bakery");
@@ -16,7 +33,7 @@ const Settings = () => {
 
   const containerVariants = {
     hidden: { opacity: 0, y: 20 },
-    visible: { opacity: 1, y: 0, transition: { delay: 0.0, duration: 0.5 } }
+    visible: { opacity: 1, y: 0, transition: { delay: 0.0, duration: 0.3 } }
   };
 
   return (

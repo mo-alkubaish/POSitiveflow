@@ -1,3 +1,10 @@
+/**
+ * EditModal manages the editing of a customer's information within a modal dialog. It pre-fills form fields with the customer's
+ * existing data, allows for changes, and validates the phone number format. The modal appears based on the 'isOpen' prop and
+ * can be dismissed with no changes or saved with updated data.
+ */
+
+
 import React, { useState, useEffect } from 'react';
 
 function EditModal({ isOpen, customer, onSave, onCancel }) {
@@ -23,14 +30,13 @@ function EditModal({ isOpen, customer, onSave, onCancel }) {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
     if (errors[name]) {
-      setErrors(prev => ({ ...prev, [name]: null })); // Clear specific field error on change
+      setErrors(prev => ({ ...prev, [name]: null })); 
     }
   };
 
   const validateForm = () => {
     const { phone } = formData;
     const errors = {};
-    // Regular expression for US phone numbers
     const phoneRegex = /^(\+?1)?\s?\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}$/;
 
     if (!phoneRegex.test(phone)) {
@@ -39,7 +45,7 @@ function EditModal({ isOpen, customer, onSave, onCancel }) {
 
     setErrors(errors);
 
-    return Object.keys(errors).length === 0; // Return true if no errors
+    return Object.keys(errors).length === 0; 
   };
 
   const handleSubmit = (e) => {
