@@ -2,7 +2,7 @@
  * LandingPage component serves as the main entry for the application's marketing site.
  * 
  * Sections and Features:
- * - Navbar: Includes navigation links to different sections of the page, a logo, and button for theme selection.
+ * - Navbar: Includes navigation links to different sections of the page and a logo.
  * - HeroSection: The main introductory section for the brand.
  * - FeaturesSection: Highlights key features of the application.
  * - TestimonialsSection: Displays user testimonials.
@@ -56,11 +56,8 @@ const LandingPage = () => {
   </div>
 
   <div className="absolute right-4 top-1/2 -translate-y-1/2 flex items-center space-x-2">
-    <button className="btn btn-success btn-sm">Sign Up</button>
-    <button onClick={toggleTheme} className="p-1 bg-gray-50 rounded-full hover:bg-gray-300">
-      <MoonIcon className="w-5 h-5 text-gray-600" />
-    </button>
-  </div>
+  <button className="btn btn-success btn-sm">Sign Up</button>
+</div>
 </nav>
 
       

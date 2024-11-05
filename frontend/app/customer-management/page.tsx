@@ -130,20 +130,29 @@ const CustomerManagement = () => {
                 </tr>
               </thead>
               <tbody>
-                {currentItems.map((customer, index) => (
-                  <tr key={index} className="bg-white hover:bg-gray-50 shadow-sm rounded-lg">
-                    <td className="py-3 px-4 text-black">{customer.name}</td>
-                    <td className="py-3 px-4 text-black">{customer.loyaltyPoints}</td>
-                    <td className="py-3 px-4 text-black">{customer.phone}</td>
-                    <td className="py-3 px-4 text-black">{customer.email}</td>
-                    <td className="py-3 px-4 text-black">{customer.lastPurchase}</td>
-                    <td className="py-3 px-4 text-right space-x-2">
-                      <button className="text-gray-500 hover:text-gray-700" onClick={() => handleEditClick(customer)}>Edit</button>
-                      <button className="text-gray-500 hover:text-gray-700" onClick={() => handleDeleteClick(customer)}>Delete</button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
+  {currentItems.length > 0 ? (
+    currentItems.map((customer, index) => (
+      <tr key={index} className="bg-white hover:bg-gray-50 shadow-sm rounded-lg">
+        <td className="py-3 px-4 text-black">{customer.name}</td>
+        <td className="py-3 px-4 text-black">{customer.loyaltyPoints}</td>
+        <td className="py-3 px-4 text-black">{customer.phone}</td>
+        <td className="py-3 px-4 text-black">{customer.email}</td>
+        <td className="py-3 px-4 text-black">{customer.lastPurchase}</td>
+        <td className="py-3 px-4 text-right space-x-2">
+          <button className="text-gray-500 hover:text-gray-700" onClick={() => handleEditClick(customer)}>Edit</button>
+          <button className="text-gray-500 hover:text-gray-700" onClick={() => handleDeleteClick(customer)}>Delete</button>
+        </td>
+      </tr>
+    ))
+  ) : (
+    <tr>
+      <td colSpan={6} className="text-center text-xl font-bold py-8 text-black">
+        No Customers found...
+      </td>
+    </tr>
+  )}
+</tbody>
+
             </table>
           </div>
 

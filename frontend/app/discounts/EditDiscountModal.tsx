@@ -13,14 +13,22 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 const EditDiscountModal = ({ discount, isOpen, onClose, onSave }) => {
-  const [editDiscount, setEditDiscount] = useState({ ...discount });
+  const [editDiscount, setEditDiscount] = useState({
+    ...discount,
+    startDate: discount.startDate ? new Date(discount.startDate) : null,
+    endDate: discount.endDate ? new Date(discount.endDate) : null,
+  });
   const [isValueError, setIsValueError] = useState(false);
 
   useEffect(() => {
-    if (discount) {
-      setEditDiscount({ ...discount });
+    if (isOpen && discount) {
+      setEditDiscount({
+        ...discount,
+        startDate: discount.startDate ? new Date(discount.startDate) : null,
+        endDate: discount.endDate ? new Date(discount.endDate) : null,
+      });
     }
-  }, [discount]);
+  }, [isOpen, discount]);
 
   if (!isOpen || !editDiscount) return null;
 
@@ -43,8 +51,16 @@ const EditDiscountModal = ({ discount, isOpen, onClose, onSave }) => {
       return;
     }
 
-    onSave(editDiscount);
-    onClose();
+    onSave({
+      ...editDiscount,
+      startDate: editDiscount.startDate.toISOString().split('T')[0],
+      endDate: editDiscount.endDate.toISOString().split('T')[0],
+    });    
+    handleClose();
+  };
+
+  const handleClose = () => {
+    setTimeout(() => onClose(), 0);
   };
 
   const handleChange = (e) => {
@@ -94,7 +110,7 @@ const EditDiscountModal = ({ discount, isOpen, onClose, onSave }) => {
           <div>
             <label className="block text-sm font-medium text-gray-700">Start Date</label>
             <DatePicker
-              selected={new Date(editDiscount.startDate)}
+              selected={editDiscount.startDate}
               onChange={(date) => setEditDiscount((prev) => ({ ...prev, startDate: date }))}
               className="input input-bordered w-full border-gray-300 bg-gray-50 text-black"
               dateFormat="yyyy-MM-dd"
@@ -103,7 +119,7 @@ const EditDiscountModal = ({ discount, isOpen, onClose, onSave }) => {
           <div>
             <label className="block text-sm font-medium text-gray-700">End Date</label>
             <DatePicker
-              selected={new Date(editDiscount.endDate)}
+              selected={editDiscount.endDate}
               onChange={(date) => setEditDiscount((prev) => ({ ...prev, endDate: date }))}
               className="input input-bordered w-full border-gray-300 bg-gray-50 text-black"
               dateFormat="yyyy-MM-dd"
@@ -112,7 +128,7 @@ const EditDiscountModal = ({ discount, isOpen, onClose, onSave }) => {
           </div>
         </div>
         <div className="flex justify-end space-x-3 mt-6">
-          <button onClick={onClose} className="bg-gray-200 hover:bg-gray-300 text-black font-semibold py-2 px-4 rounded">
+          <button onClick={handleClose} className="bg-gray-200 hover:bg-gray-300 text-black font-semibold py-2 px-4 rounded">
             Cancel
           </button>
           <button onClick={handleSubmit} className="bg-black hover:bg-gray-700 text-white font-semibold py-2 px-4 rounded">

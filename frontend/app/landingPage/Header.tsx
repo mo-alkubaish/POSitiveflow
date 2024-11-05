@@ -6,11 +6,10 @@
  * - Logo and brand name linked to the hero section.
  * - Smooth scrolling links to different sections: Features, Testimonials, User Demos, and Contact.
  * - "Sign Up" button for user onboarding.
- * - Theme toggle button (moon icon) and language toggle button (globe icon) with placeholder functions.
+ * - Theme toggle button (moon icon) with  functions.
  * 
  * Props:
  * - `toggleTheme` (function): Callback to switch between light and dark themes.
- * - `toggleLanguage` (function): Callback to change the language.
  * 
  * This component enhances user navigation and provides quick access to theme and language settings.
  */
@@ -20,7 +19,7 @@ import React from "react";
 import { Link } from "react-scroll";
 import { MoonIcon, GlobeAltIcon } from "@heroicons/react/24/solid";
 
-const Header = ({ toggleTheme, toggleLanguage }) => {
+const Header = ({ toggleTheme }) => {
     return (
         <nav className="flex items-center justify-center py-4 relative shadow-none border-0">
             <div className="absolute left-4 top-1/2 transform -translate-y-1/2 flex items-center space-x-2 text-lg font-bold">
@@ -43,9 +42,6 @@ const Header = ({ toggleTheme, toggleLanguage }) => {
                 <button className="btn btn-success btn-sm">Sign Up</button>
                 <button onClick={toggleTheme} className="p-1 bg-gray-50 rounded-full hover:bg-gray-300">
                     <MoonIcon className="w-5 h-5 text-gray-600" />
-                </button>
-                <button onClick={toggleLanguage} className="p-1 bg-blue-200 rounded-full hover:bg-blue-300">
-                    <GlobeAltIcon className="w-5 h-5 text-blue-500" />
                 </button>
             </div>
         </nav>    
