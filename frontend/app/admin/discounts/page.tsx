@@ -11,10 +11,9 @@
 "use client";
 
 import React, { useState } from "react";
-import Navbar from "../components/Navbar";
 import { DiscountForm } from "./DiscountForm";
 import { DiscountList } from "./DiscountList";
-import discountsData from "../data/discounts.json";
+import discountsData from "../../data/discounts.json";
 import { Discount } from "./Discount";
 
 const Discounts = () => {
@@ -40,9 +39,6 @@ const Discounts = () => {
   };
 
   return (
-    <div className="bg-gray-100 min-h-screen">
-      <Navbar />
-      <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
       <div className="container mx-auto p-6">
         <DiscountList
           discounts={discounts}
@@ -51,7 +47,6 @@ const Discounts = () => {
         />
         <DiscountForm addDiscount={addDiscount} />
       </div>
-    </div>
   );
 };
 

@@ -7,21 +7,22 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
 
-const Navbar = () => {
+interface NavLink {
+  path: string;
+  label: string;
+}
+
+interface NavbarProps {
+  navLinks: NavLink[];
+}
+
+const Navbar = ({ navLinks }: NavbarProps) => {
   const pathname = usePathname();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
-  const navLinks = [
-    { path: '/dashboard', label: 'Dashboard' },
-    { path: '/customer-management', label: 'Customer Management' },
-    { path: '/discounts', label: 'Discounts' },
-    { path: '/user-management', label: 'User Management' },
-    { path: '/settings', label: 'Settings' },
-  ];
+  const isActive = (path: string): boolean => pathname === path;
 
-  const isActive = (path) => pathname === path;
-
-  let closeTimeout;
+  let closeTimeout: ReturnType<typeof setTimeout>;
   const handleMouseEnter = () => {
     clearTimeout(closeTimeout);
     setIsDropdownOpen(true);

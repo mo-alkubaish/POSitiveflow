@@ -32,7 +32,7 @@ const demoContent = {
     title: "Store Owner/Manager",
     description: "Manage users, configure settings, and access comprehensive sales and inventory reports.",
     features: ["User Management", "Reports", "Settings"],
-    link: "/user-management"
+    link: "/admin/user-management"
   },
   cashier: {
     title: "Cashier",

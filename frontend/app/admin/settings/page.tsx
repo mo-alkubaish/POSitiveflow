@@ -19,7 +19,6 @@
 
 import React, { useState } from "react";
 import { motion } from 'framer-motion';
-import Navbar from "../components/Navbar";
 import SettingsForm from "./settingsForm";
 import BackupSection from "./backupSection";
 
@@ -37,12 +36,6 @@ const Settings = () => {
   };
 
   return (
-    <div className="bg-gray-100 min-h-screen">
-      <Navbar />
-      <link
-        href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
-        rel="stylesheet"
-      />
       <motion.div
         className="container mx-auto p-6"
         variants={containerVariants}
@@ -68,7 +61,6 @@ const Settings = () => {
         {/* Backup Section */}
         <BackupSection />
       </motion.div>
-    </div>
   );
 };
 
