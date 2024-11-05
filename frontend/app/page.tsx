@@ -18,7 +18,6 @@
 "use client";
 
 import React from "react";
-import { MoonIcon, GlobeAltIcon } from "@heroicons/react/24/solid";
 import HeroSection from "./landingPage/heroSection";
 import FeaturesSection from "./landingPage/featuresSection";
 import TestimonialsSection from "./landingPage/testimonialsSection";
@@ -27,9 +26,6 @@ import UserDemosSection from "./landingPage/userDemosSection";
 import { Link } from "react-scroll";  
 
 const LandingPage = () => {
-  const toggleTheme = () => {
-    console.log("Toggle theme placeholder");
-  };
 
   return (
     <div className="bg-base-200 min-h-screen text-base-content">
