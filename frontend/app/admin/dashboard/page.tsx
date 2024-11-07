@@ -64,35 +64,20 @@ export default function Component() {
     from: new Date(today.getFullYear(), today.getMonth(), 1),
     to: today,
   })
-  const [data, setData] = useState(null)
-  const [loading, setLoading] = useState(true)
+  const mockApiResponse = generateMockApiResponse(date.from, date.to)
 
-  useEffect(() => {
-    const fetchData = async () => {
-      if (date?.from && date?.to) {
-        try {
-          // In a real scenario, this would be a fetch call to an API endpoint
-          const mockApiResponse = generateMockApiResponse(date.from, date.to)
-          setData(mockApiResponse)
-        } catch (error) {
-          console.error("Error fetching data:", error)
-        } finally {
-          setLoading(false)
-        }
-      }
-    }
-
-    fetchData()
-  }, [date])
+  const [data, setData] = useState(mockApiResponse)
+  // const [loading, setLoading] = useState(false)
 
 
-  if (loading) {
-    return <div className="flex justify-center items-center h-screen">Loading...</div>
-  }
 
-  if (!data) {
-    return <div className="flex justify-center items-center h-screen">Error loading data</div>
-  }
+  // if (loading) {
+  //   return <div className="flex justify-center items-center h-screen">Loading...</div>
+  // }
+
+  // if (!data) {
+  //   return <div className="flex justify-center items-center h-screen">Error loading data</div>
+  // }
 
   return (
     <motion.div

@@ -42,47 +42,76 @@ import productsData from '../../data/products.json';
 import { motion, AnimatePresence } from 'framer-motion';
 import './animations.css'; 
 
-const Store = () => {
-    const [cart, setCart] = useState([]);
+const Store = ({selectedDraft}) => {
+    const [carts, setCarts] = useState<Record<number, any[]>>(() => ({
+        [selectedDraft]: []
+      }));
+    const [currentCart, setCurrentCart] = useState([]);
+
+    
     const [products, setProducts] = useState([]);
     const [selectedCategory, setSelectedCategory] = useState('');
     const [categories, setCategories] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
 
+    // Effect for products initialization
     useEffect(() => {
         setProducts(productsData);
-        const uniqueCategories = new Set(productsData.map(product => product.category));
+    }, [productsData]);
+
+    // Effect for categories calculation
+    useEffect(() => {
+        const uniqueCategories = new Set(products.map(product => product.category));
         setCategories([...uniqueCategories]);
-    }, []);
+    }, [products]);
+
+    useEffect(() => {
+        setCarts(prevCarts => ({
+            ...prevCarts,
+            [selectedDraft]: prevCarts[selectedDraft] || []
+          }));
+          setCurrentCart(carts[selectedDraft] ?? []);
+
+    }, [selectedDraft, carts]);
 
     const addToCart = (product) => {
-        const existingProduct = cart.find(item => item.id === product.id);
+        const existingProduct = currentCart.find(item => item.id === product.id);
         if (existingProduct) {
             existingProduct.quantity += 1;
-            setCart([...cart]);
+            
+            setCarts(prevCarts => ({
+                ...prevCarts,
+                [selectedDraft]: [...(prevCarts[selectedDraft] || [])]
+            }));
         } else {
-            setCart([...cart, { ...product, quantity: 1 }]);
+            setCarts(prevCarts => ({
+                ...prevCarts,
+                [selectedDraft]: [...(prevCarts[selectedDraft] || []), { ...product, quantity: 1 }]
+            }));
         }
     };
 
     const removeFromCart = (productId) => {
-        setCart(cart.filter(item => item.id !== productId));
+        setCarts(currentCart.filter(item => item.id !== productId));
     };
 
     const updateQuantity = (productId, increment) => {
-        const productIndex = cart.findIndex(item => item.id === productId);
+        const productIndex = currentCart.findIndex(item => item.id === productId);
         if (productIndex !== -1) {
-            const newQuantity = cart[productIndex].quantity + increment;
+            const newQuantity = currentCart[productIndex].quantity + increment;
             if (newQuantity > 0) {
-                cart[productIndex].quantity = newQuantity;
-                setCart([...cart]);
+                currentCart[productIndex].quantity = newQuantity;
+                setCarts(prevCarts => ({
+                    ...prevCarts,
+                    [selectedDraft]: [...(prevCarts[selectedDraft] || [])]
+                }));
             } else if (newQuantity === 0) {
                 removeFromCart(productId);
             }
         }
     };
 
-    const calculateSubtotal = () => cart.reduce((total, item) => total + (item.price * item.quantity), 0);
+    const calculateSubtotal = () => currentCart.reduce((total, item) => total + (item.price * item.quantity), 0);
     const calculateTax = (subtotal) => subtotal * 0.1;
 
     const handleCategoryFilter = (category) => setSelectedCategory(category);
@@ -105,7 +134,7 @@ const Store = () => {
             <div className="w-1/4 bg-white p-4 rounded-lg shadow-md">
                 <h2 className="text-xl font-bold mb-4">Selected Items</h2>
                 <AnimatePresence>
-                    {cart.map((item) => (
+                    {currentCart.map((item) => (
                         <motion.div
                             key={item.id}
                             initial="hidden"

@@ -19,16 +19,19 @@
  * - Used within a larger app to provide the main interface where users interact with the store
  *   while navigating through drafts or user settings in the navbar.
  */
+"use client";
 
-import React from 'react';
+import React, { useState } from 'react';
 import Store from './store';          
 import DraftsNavbar from './DraftsNavbar'; 
 
+
 const Page = () => {
+    const [draft, setDraft] = useState(1);
     return (
         <div>
-            <DraftsNavbar />
-            <Store />
+            <DraftsNavbar selectedDraft={draft} setDraft={setDraft}/>
+            <Store selectedDraft={draft}/>
         </div>
     );
 };

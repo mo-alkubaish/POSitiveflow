@@ -31,10 +31,14 @@
 
 import React, { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';  
+interface DraftsNavbarProps {
+    selectedDraft: number;
+    setDraft: (draft: number) => void;
+}
 
-const DraftsNavbar = () => {
+const DraftsNavbar: React.FC<DraftsNavbarProps> = ({ selectedDraft, setDraft }) => {
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-    const [selectedDraft, setSelectedDraft] = useState(null); 
+    const [drafts, setDrafts] = useState([1, 2, 3]);
     const closeTimeout = useRef(null);
 
     const handleMouseEnter = () => {
@@ -51,29 +55,36 @@ const DraftsNavbar = () => {
     }, []);
 
     const handleDraftClick = (draft) => {
-        setSelectedDraft(draft);
+        setDraft(draft);
+    };
+    const handleNewDraft = () => {
+        const newDraftId = drafts.length > 0 ? Math.max(...drafts) + 1 : 1;
+        setDrafts([...drafts, newDraftId]);
     };
 
     return (
         <div className="bg-gray-100 p-2 flex items-center justify-center relative">
             <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
-            <div className="absolute left-4 top-1/2 transform -translate-y-1/2 flex items-center space-x-2 text-lg font-bold hidden lg:flex">
+            <div className="absolute left-2 top-1/2 transform -translate-y-1/2 flex items-center space-x-2 text-lg font-bold hidden lg:flex">
                 <img src="/logo.png" alt="PositiveFlow Logo" className="w-8 h-auto" />
                 <span className='text-black'><span className="text-green-700">POS</span>itiveFlow</span>
             </div>
-            <div className="bg-white p-2 flex items-center justify-center rounded-full shadow-md max-w-xs mx-auto space-x-2">
-                <button
-                    className={`px-4 py-2 ${selectedDraft === 'Draft 1' ? 'bg-green-100 text-green-700 font-bold rounded-full' : 'bg-white text-gray-800'}`}
-                    onClick={() => handleDraftClick('Draft 1')}
-                >
-                    Draft 1
-                </button>
-                <button
-                    className={`px-4 py-2 ${selectedDraft === 'Draft 2' ? 'bg-green-100 text-green-700 font-bold rounded-full' : 'bg-white text-gray-800'}`}
-                    onClick={() => handleDraftClick('Draft 2')}
-                >
-                    Draft 2
-                </button>
+            <div className="bg-white p-2 flex items-center justify-center rounded-full shadow-md mx-auto space-x-2">
+                {drafts.map((draft, index) => (
+                    <button
+                        key={index}
+                        className={`px-4 py-2 ${selectedDraft === draft ? 'bg-green-100 text-green-700 font-bold rounded-full' : 'bg-white text-gray-800'}`}
+                        onClick={() => handleDraftClick(draft)}>
+                        draft {draft}
+                    </button>
+                ))}
+                    <button 
+                        className="px-4 py-2 bg-gray-100 text-gray-800 hover:bg-gray-200 rounded-full"
+                        onClick={() => handleNewDraft()}>
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                            <path fillRule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clipRule="evenodd" />
+                        </svg>
+                    </button>
             </div>
             <div className="absolute right-4 top-1/2 transform -translate-y-1/2" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
                 <div className="p-2 rounded-full bg-white hover:bg-gray-100 cursor-pointer">
