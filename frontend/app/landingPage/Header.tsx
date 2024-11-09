@@ -39,7 +39,7 @@ const Header = ({ toggleTheme }) => {
             </div>
 
             <div className="absolute right-4 top-1/2 transform -translate-y-1/2 flex items-center space-x-2">
-                <button className="btn btn-success btn-sm">Sign Up</button>
+                <button className="btn btn-success btn-sm">Sign In</button>
                 <button onClick={toggleTheme} className="p-1 bg-gray-50 rounded-full hover:bg-gray-300">
                     <MoonIcon className="w-5 h-5 text-gray-600" />
                 </button>

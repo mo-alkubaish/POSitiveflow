@@ -1,0 +1,31 @@
+.header{
+    background-color: white;
+    height: 9vh;
+    margin-bottom: 20px;
+}
+.logo{
+    padding:10px;
+}
+.avatarText{
+    padding: 10px;
+    position: relative;
+    top: -50px;
+    font-size: 15px;
+}
+.avatarImg{
+    margin: 10px;
+    position: relative;
+    top: -57px;
+    border-radius: 50px;
+}
+.feedbackWidget{
+    padding: 40px;
+}
+.div1{
+
+    height: 20vh;
+}
+.p{
+    font-size: 16px;
+    color: gray;
+}

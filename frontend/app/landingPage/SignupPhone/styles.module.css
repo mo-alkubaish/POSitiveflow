@@ -1,0 +1,26 @@
+.center{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+}
+.label{
+    position: relative;
+    display: block;
+    color: gray;
+    font-size: 14px;
+    left: 75px;
+    cursor: pointer;
+}
+.label1{
+    position: relative;
+    display: block;
+    color: gray;
+    font-size: 14px;
+    width: 0;
+    padding-left: 15px;
+}
+.logo{
+    position: relative;
+    left: 30px;
+}

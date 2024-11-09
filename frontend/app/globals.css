@@ -15,8 +15,8 @@
 }
 
 body {
-  color: var(--foreground);
-  background: var(--background);
+  color: var(--background);
+  background: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
 
@@ -58,7 +58,3 @@ html, body, p, h1, h2, h3, h4, h5, h6, div {
 .animate-fade-out {
   animation: fadeOut 0.5s ease forwards;
 }
-
-
-
-

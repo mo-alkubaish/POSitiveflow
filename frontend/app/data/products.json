@@ -1,43 +1,74 @@
 [
-    {
-      "productName": "Basbousa",
-      "sku": "SKU001",
-      "price": "$11.99"
-    },
-    {
-      "productName": "Maamoul",
-      "sku": "SKU002",
-      "price": "$12.99"
-    },
-    {
-      "productName": "Knafeh",
-      "sku": "SKU003",
-      "price": "$13.99"
-    },
-    {
-      "productName": "Qatayef",
-      "sku": "SKU004",
-      "price": "$14.99"
-    },
-    {
-      "productName": "Fatayer",
-      "sku": "SKU005",
-      "price": "$15.99"
-    },
-    {
-      "productName": "Khubuz",
-      "sku": "SKU006",
-      "price": "$16.99"
-    },
-    {
-      "productName": "Zattar",
-      "sku": "SKU007",
-      "price": "$17.99"
-    },
-    {
-      "productName": "Cheese",
-      "sku": "SKU008",
-      "price": "$18.99"
-    }
-  ]
-  
+  {
+    "id": 1,
+    "name": "Basbousa",
+    "sku": "SKU001",
+    "price": "11.99",
+    "category": "Dessert",
+    "stock": 50,
+    "image": "/basbousa.png"
+  },
+  {
+    "id": 2,
+    "name": "Cinnabon",
+    "sku": "SKU002",
+    "price": "12.99",
+    "category": "Dessert",
+    "stock": 50,
+    "image": "/cinnabon.png"
+  },
+  {
+    "id": 3,
+    "name": "Umm Ali",
+    "sku": "SKU003",
+    "price": "13.99",
+    "category": "Dessert",
+    "stock": 50,
+    "image": "/umali.png"
+  },
+  {
+    "id": 4,
+    "name": "Caramelized Sesame",
+    "sku": "SKU004",
+    "price": "14.99",
+    "category": "Crackers",
+    "stock": 50,
+    "image": "/sesame.png"
+  },
+  {
+    "id": 5,
+    "name": "Margherita Pizza",
+    "sku": "SKU005",
+    "price": "15.99",
+    "category": "Pastry",
+    "stock": 50,
+    "image": "/pizza.png"
+  },
+  {
+    "id": 6,
+    "name": "Tabbouleh",
+    "sku": "SKU006",
+    "price": "16.99",
+    "category": "Salads",
+    "stock": 50,
+    "image": "/tabbouleh.png"
+  },
+  {
+    "id": 7,
+    "name": "Zattar",
+    "sku": "SKU007",
+    "price": "17.99",
+    "category": "Pastry",
+    "stock": 50,
+    "image": "/zaatar.png"
+  },
+  {
+    "id": 8,
+    "name": "Cheese",
+    "sku": "SKU008",
+    "price": "18.99",
+    "category": "Pastry",
+    "stock": 50,
+    "image": "/cheese.png"
+  }
+]

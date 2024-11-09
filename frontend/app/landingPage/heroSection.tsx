@@ -72,7 +72,7 @@ const HeroSection = () => {
           <p className="mb-6 text-lg">
             A streamlined solution for managing your retail business with ease and efficiency.
           </p>
-          <Link href="/signup" className="btn btn-success">Get Started</Link>
+          <Link href="/landingPage/SignupEmail" className="btn btn-success">Get Started</Link>
         </motion.div>
       </div>
     </div>

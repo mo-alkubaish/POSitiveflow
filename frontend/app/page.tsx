@@ -25,6 +25,9 @@ import ContactSection from "./landingPage/contactSection";
 import UserDemosSection from "./landingPage/userDemosSection";
 import { Link } from "react-scroll";  
 
+
+import Linkk from 'next/link';
+
 const LandingPage = () => {
 
   return (
@@ -52,8 +55,8 @@ const LandingPage = () => {
   </div>
 
   <div className="absolute right-4 top-1/2 -translate-y-1/2 flex items-center space-x-2">
-  <button className="btn btn-success btn-sm">Sign Up</button>
-</div>
+  <Linkk href="/landingPage/LoginEmail" className="btn btn-success">Log in</Linkk>
+  </div>
 </nav>
 
       

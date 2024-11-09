@@ -32,13 +32,13 @@ const demoContent = {
     title: "Store Owner/Manager",
     description: "Manage users, configure settings, and access comprehensive sales and inventory reports.",
     features: ["User Management", "Reports", "Settings"],
-    link: "/admin/user-management"
+    link: "/admin/dashboard"
   },
   cashier: {
     title: "Cashier",
     description: "Quick access to sales forms, payment processing, and receipt generation via WhatsApp.",
     features: ["Sales Processing", "Digital Receipts", "Draft Orders"],
-    link: "/cashier-dashboard"
+    link: "/cashier/items"
   },
   inventoryManager: {
     title: "Inventory Manager",
@@ -50,7 +50,7 @@ const demoContent = {
     title: "Customer",
     description: "Access receipts, view purchase history, and participate in loyalty programs.",
     features: ["Receipts", "Loyalty Program", "Purchase History"],
-    link: "/customer-dashboard"
+    link: "/customer"
   },
 };
 
