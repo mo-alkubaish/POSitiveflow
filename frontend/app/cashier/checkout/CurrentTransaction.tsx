@@ -28,8 +28,8 @@ import React, { useState } from 'react';
 import { useDiscount } from './DiscountContext';
 import products from '../../data/cashierProducts.json';
 
-const CurrentTransaction = () => {
-    const [items, setItems] = useState(products);
+const CurrentTransaction = ({items, setItems}) => {
+    // const [items, setItems] = [products, setProducts];
     const { discount } = useDiscount();
 
     const updateQuantity = (id, increment) => {
@@ -39,7 +39,7 @@ const CurrentTransaction = () => {
     };
 
     const calculateTotal = () => items.reduce((total, item) => total + (item.price * item.quantity), 0);
-    const calculateVAT = (total) => total * 0.1;
+    const calculateVAT = (total) => total * 0.15;
     const calculateDiscount = (total) => {
         return parseFloat(discount); 
     };
@@ -50,7 +50,7 @@ const CurrentTransaction = () => {
     const total = subtotal + VAT - discountAmount;
 
     return (
-        <div className="card bg-white shadow-xl p-4 text-black w-full sm:w-[600px] md:w-[795px] h-[395px]">
+        <div className="card bg-white shadow-xl p-4 text-black w-full sm:w-[600px] md:w-[795px] h-[395px] invoice">
             <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
             <h2 className="card-title text-lg font-bold">Current Transaction</h2>
             <div className="overflow-x-auto">
@@ -69,8 +69,8 @@ const CurrentTransaction = () => {
                                     <span>{item.quantity}</span>
                                     <button className="btn btn-xs" onClick={() => updateQuantity(item.id, 1)}>+</button>
                                 </td>
-                                <td>${item.price.toFixed(2)}</td>
-                                <td>${(item.price * item.quantity).toFixed(2)}</td>
+                                <td>${item.price}</td>
+                                <td>${(item.price * item.quantity)}</td>
                             </tr>
                         ))}
                     </tbody>
@@ -81,11 +81,12 @@ const CurrentTransaction = () => {
                     <span>Subtotal:</span><span>${subtotal.toFixed(2)}</span>
                 </div>
                 <div className="flex justify-between">
-                    <span>VAT (10%):</span><span>${VAT.toFixed(2)}</span>
+                    <span>VAT (15%):</span><span>${VAT.toFixed(2)}</span>
                 </div>
-                <div className="flex justify-between">
+                {discount > 0? (<div className="flex justify-between">
                     <span>Discount:</span><span>-${discountAmount.toFixed(2)}</span>
-                </div>
+                </div>) : null}
+
                 <div className="flex justify-between font-bold">
                     <span>Total:</span><span>${total.toFixed(2)}</span>
                 </div>

@@ -39,8 +39,12 @@ import CustomerInformation from './CustomerInformation';
 import QuickActions from './QuickActions'; 
 import { DiscountProvider } from './DiscountContext';
 import Payment from './payment';
+import { useSearchParams } from 'next/navigation';
 
 const Dashboard = () => {
+    const searchParams = useSearchParams();
+    const cartData = JSON.parse(decodeURIComponent(searchParams.get('cart') || '[]'));
+    const [cart, setCart] = useState(cartData);
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const closeTimeout = useRef(null);
 
@@ -86,12 +90,12 @@ const Dashboard = () => {
                     <div className="max-w-7xl w-full"> 
                         <div className="flex flex-col md:flex-row gap-8"> 
                             <div className="flex flex-col w-full space-y-4">
-                                <CurrentTransaction />
-                                <Payment />
+                                <CurrentTransaction items={cart} setItems={setCart} />
+                                <Payment items={cart} />
                             </div>
                             <div className="flex flex-col w-full md:w-[600px] space-y-4"> 
                                 <CustomerInformation />
-                                <QuickActions />
+                                <QuickActions items={cart} />
                             </div>
                         </div>
                     </div>

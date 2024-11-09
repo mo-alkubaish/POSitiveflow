@@ -29,40 +29,108 @@
 
 
 "use client";
+import { useDiscount } from './DiscountContext';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
-const Payment = () => {
+const Payment = ({items}) => {
+    const printStyles = `
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+            .invoice, .invoice * {
+                visibility: visible;
+            }
+            .invoice h2, .invoice button {
+                visibility: hidden;
+            }
+            .invoice {
+                position: absolute;
+                left: 0;
+                top: 0;
+            }
+        }`;
+    const { discount } = useDiscount();
+
+    const calculateTotal = () => items.reduce((total, item) => total + (item.price * item.quantity), 0);
+    const calculateVAT = (total) => total * 0.15;
+    const calculateDiscount = (total) => {
+        return parseFloat(discount); 
+    };
+
+    const subtotal = calculateTotal();
+    const VAT = calculateVAT(subtotal);
+    const discountAmount = calculateDiscount(subtotal); 
+    const total = +(subtotal + VAT - discountAmount).toFixed(2);
     const [paymentMethod, setPaymentMethod] = useState('cash');
     const [showSplitDetails, setShowSplitDetails] = useState(false);
     const [numSplits, setNumSplits] = useState(2);
-    const [splits, setSplits] = useState([{ value: 55.00 }, { value: 55.00 }]);
-    const totalAmount = 110.00; 
+    const [splits, setSplits] = useState([]);
+    useEffect(() => {
+        const splitAmount = +(total / numSplits).toFixed(2); // Round to 2 decimals
+        const totalSplits = splitAmount * numSplits;
+        const difference = +(total - totalSplits).toFixed(2); // Handle rounding difference
+    
+        const newSplits = new Array(numSplits).fill(null).map((_, idx) => ({
+            value: +(idx === numSplits - 1 
+                ? splitAmount + difference // Add remaining difference to last split
+                : splitAmount).toFixed(2)
+        }));
+    
+        setSplits(newSplits);
+    }, [numSplits, total]);
+
+
 
     const handlePrintReceipt = () => {
+        const style = document.createElement('style');
+        style.textContent = printStyles;
+        document.head.appendChild(style);
         window.print();
+        document.head.removeChild(style);
     };
 
     const handleToggleSplitDetails = () => {
         setShowSplitDetails(!showSplitDetails);
     };
 
-    const handleSplitChange = (index, value) => {
-        let parsedValue = parseFloat(value);
-        const newSplits = splits.map((split, idx) => idx === index ? { ...split, value: parsedValue } : split);
-        const totalSplits = newSplits.reduce((acc, curr) => acc + parseFloat(curr.value), 0);
-
-        if (totalSplits <= totalAmount) {
-            setSplits(newSplits);
+    const handleSplitChange = (index: number, newValue: number) => {
+        const value = Math.max(0, +newValue);
+        if (isNaN(value)) return;
+    
+        const newSplits = [...splits];
+        const oldValue = newSplits[index].value;
+        const difference = value - oldValue;
+    
+        // Count only remaining splits after current index
+        const remainingSplitsCount = numSplits - (index + 1);
+        if (remainingSplitsCount === 0) return;
+    
+        const adjustmentPerSplit = -difference / remainingSplitsCount;
+    
+        // Adjust only splits that come after the changed one
+        const adjustedSplits = newSplits.map((split, idx) => ({
+            value: idx === index 
+                ? value 
+                : idx > index 
+                    ? Math.max(0, +(split.value + adjustmentPerSplit).toFixed(2))
+                    : split.value
+        }));
+    
+        const newTotal = adjustedSplits.reduce((sum, split) => sum + split.value, 0);
+        
+        if (Math.abs(newTotal - total) < 0.01) {
+            setSplits(adjustedSplits);
         } else {
-            alert("Total of splits exceeds the total amount!");
+            alert("Split amount exceeds total!");
         }
     };
 
     const handleNumSplitsChange = (increment) => {
         let newNumSplits = Math.max(1, numSplits + increment);
         const newSplits = new Array(newNumSplits).fill().map((_, idx) => ({
-            value: splits[idx] ? splits[idx].value : totalAmount / newNumSplits
+            value: splits[idx] ? splits[idx].value : total / newNumSplits
         }));
         setSplits(newSplits);
         setNumSplits(newNumSplits);
@@ -77,9 +145,10 @@ const Payment = () => {
                         <div className="mb-4">
                             <h3 className="font-semibold">Order Summary</h3>
                             <div className="text-gray-700 mt-2 space-y-2">
-                                <p>Subtotal: <span className="font-bold">$100.00</span></p>
-                                <p>Tax: <span className="font-bold">$10.00</span></p>
-                                <p>Total: <span className="font-bold">$110.00</span></p>
+                                <p>Subtotal: <span className="font-bold">{subtotal.toFixed(2)}</span></p>
+                                <p>VAT(15%): <span className="font-bold">{VAT.toFixed(2)}</span></p>
+                                {discount > 0? (<p>Discount: <span className="font-bold">{discount.toFixed(2)}</span></p>) : null}
+                                <p>Total: <span className="font-bold">{total.toFixed(2)}</span></p>
                             </div>
                         </div>
                     </div>

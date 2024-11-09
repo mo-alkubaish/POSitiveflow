@@ -25,10 +25,29 @@ import Link from 'next/link';
 import { useDiscount } from './DiscountContext';
 import discountsData from '../../data/discounts.json';
 
-const QuickActions = () => {
+const QuickActions = ({items}) => {
     const [isDiscountModalOpen, setIsDiscountModalOpen] = useState(false);
     const [availableDiscounts, setAvailableDiscounts] = useState([]);
-    const { applyDiscount } = useDiscount();
+    const { setDiscount, discount } = useDiscount();
+    const calculateTotal = () => items.reduce((total, item) => total + (item.price * item.quantity), 0);
+    const calculateVAT = (total) => total * 0.15;
+    const calculateDiscount = (total) => {
+        return parseFloat(discount); 
+    };
+
+    const subtotal = calculateTotal();
+    const VAT = calculateVAT(subtotal);
+    const discountAmount = calculateDiscount(subtotal); 
+    const total = subtotal + VAT - discountAmount;
+    const applyDiscount = (value, type) => {
+        if (type === "Percentage") {
+            setDiscount((prev) => prev + value/100 * total);
+        } else {
+            setDiscount((prev) => value + prev);
+        }
+        console.log(`Discount of ${value} ${type} applied`);
+    }
+
 
     useEffect(() => {
         const today = new Date();
@@ -43,10 +62,10 @@ const QuickActions = () => {
     const handleApplyDiscountClick = () => setIsDiscountModalOpen(true);
 
     const handleDiscountSelect = (discount) => {
-        applyDiscount({
-            value: parseFloat(discount.value),
-            type: discount.type
-        });
+        applyDiscount(
+            parseFloat(discount.value),
+            discount.type
+        );
         setIsDiscountModalOpen(false);
     };
 

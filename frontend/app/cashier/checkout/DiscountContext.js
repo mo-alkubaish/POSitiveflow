@@ -19,6 +19,7 @@
  */
 
 
+import { type } from 'os';
 import React, { createContext, useContext, useState } from 'react';
 
 const DiscountContext = createContext();

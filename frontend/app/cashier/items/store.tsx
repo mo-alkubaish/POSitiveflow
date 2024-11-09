@@ -41,8 +41,12 @@ import React, { useState, useEffect } from 'react';
 import productsData from '../../data/products.json';
 import { motion, AnimatePresence } from 'framer-motion';
 import './animations.css'; 
+import { useRouter } from 'next/navigation';
+
 
 const Store = ({selectedDraft}) => {
+    const router = useRouter();
+
     const [carts, setCarts] = useState<Record<number, any[]>>(() => ({
         [selectedDraft]: []
       }));
@@ -66,13 +70,16 @@ const Store = ({selectedDraft}) => {
     }, [products]);
 
     useEffect(() => {
+          setCurrentCart(carts[selectedDraft] ?? []);
+
+    }, [selectedDraft, carts]);
+    useEffect(() => {
         setCarts(prevCarts => ({
             ...prevCarts,
             [selectedDraft]: prevCarts[selectedDraft] || []
           }));
-          setCurrentCart(carts[selectedDraft] ?? []);
-
-    }, [selectedDraft, carts]);
+    }
+    , [selectedDraft]);
 
     const addToCart = (product) => {
         const existingProduct = currentCart.find(item => item.id === product.id);
@@ -94,6 +101,18 @@ const Store = ({selectedDraft}) => {
     const removeFromCart = (productId) => {
         setCarts(currentCart.filter(item => item.id !== productId));
     };
+    const handleCheckout = () => {
+        if (currentCart.length === 0) {
+            // Optional: Show error/warning if cart is empty
+            return;
+        }
+    
+        // Option 1: Using URL params or search params
+        const cartData = encodeURIComponent(JSON.stringify(currentCart));
+        router.push(`/cashier/checkout?cart=${cartData}`);
+
+    };
+    
 
     const updateQuantity = (productId, increment) => {
         const productIndex = currentCart.findIndex(item => item.id === productId);
@@ -158,9 +177,7 @@ const Store = ({selectedDraft}) => {
                     <div>Subtotal: ${calculateSubtotal().toFixed(2)}</div>
                     <div>Tax: ${calculateTax(calculateSubtotal()).toFixed(2)}</div>
                     <div>Total: ${(calculateSubtotal() + calculateTax(calculateSubtotal())).toFixed(2)}</div>
-                    <a href="/cashier/checkout">
-                        <button className="mt-4 px-6 py-2 bg-black text-white rounded-full btn">Checkout</button>
-                    </a>
+                    <button onClick={handleCheckout} className="mt-4 px-6 py-2 bg-black text-white rounded-full btn">Checkout</button>
                 </div>
             </div>
             <div className="w-3/4 bg-white p-4 rounded-lg shadow-md">

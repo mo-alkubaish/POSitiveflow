@@ -1,22 +1,19 @@
-
 "use client";
-import React, { useState } from 'react';
-import SupplierManagement from '/Users/abdullah/Documents/GitHub/POSitiveflow/frontend/app/inventory/suppliers/page';
-import ProductManagement from '/Users/abdullah/Documents/GitHub/POSitiveflow/frontend/app/inventory/products/page';
-
+import React, { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 
 const Page = () => {
   const [currentView, setCurrentView] = useState('suppliers');
+  const router = useRouter();
 
-  return (
-    <div className="container mx-auto p-6">
-      {currentView === 'suppliers' ? (
-        <SupplierManagement />
-      ) : (
-        <ProductManagement />
-      )}
-    </div>
-  );
+  useEffect(() => {
+    // Check if current path is inventory
+    if (window.location.pathname === '/inventory') {
+      router.push('/inventory/products');
+    }
+  }, []);
+
+  return ( <div> </div> );
 };
 
 export default Page;

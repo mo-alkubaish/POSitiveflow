@@ -1,6 +1,7 @@
 // layout.tsx
 import React from 'react';
-import Navbar from '/Users/abdullah/Documents/GitHub/POSitiveflow/frontend/app/components/Navbar';
+import Navbar from '../components/Navbar';
+import Notify from './notify';
 
 export default function Layout({ children }) {
   const navLinks = [
@@ -10,7 +11,7 @@ export default function Layout({ children }) {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <Navbar navLinks={navLinks} />
+      <Navbar navLinks={navLinks} component={<Notify />} />
       <main>{children}</main>
     </div>
   );

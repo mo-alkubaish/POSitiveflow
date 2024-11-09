@@ -15,10 +15,11 @@ interface NavLink {
 }
 
 interface NavbarProps {
-  navLinks: NavLink[];
+  navLinks: NavLink[], 
+  component?: React.FC;
 }
 
-const Navbar = ({ navLinks }: NavbarProps) => {
+const Navbar = ({ navLinks, component }: NavbarProps) => {
   const pathname = usePathname();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -80,6 +81,7 @@ const Navbar = ({ navLinks }: NavbarProps) => {
           ))}
         </div>
       </div>
+      {component}
 
       {/* User Icon with Dropdown - Shows on Hover */}
       <div
