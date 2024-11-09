@@ -44,7 +44,7 @@ const demoContent = {
     title: "Inventory Manager",
     description: "Manage products, suppliers, and receive notifications on low stock.",
     features: ["Inventory Management", "Supplier Tracking", "Barcode Generation"],
-    link: "/inventory-dashboard"
+    link: "/inventory"
   },
   customer: {
     title: "Customer",

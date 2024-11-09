@@ -5,6 +5,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { DateRange } from "react-day-picker"
+import { motion } from 'framer-motion';
 
 import {
   Table,
@@ -49,6 +50,13 @@ const generateMockApiResponse = (startDate: Date, endDate: Date) => {
     ],
   };
 };
+
+const tableVariants = {
+  initial: { opacity: 0, y: 20 },
+  animate: { opacity: 1, y: 0 },
+  exit: { opacity: 0, y: -20 },
+};
+
 const today = new Date()
 
 export default function Component() {
@@ -87,6 +95,14 @@ export default function Component() {
   }
 
   return (
+    <motion.div
+    className="container mx-auto p-6"
+    initial="initial"
+    animate="animate"
+    exit="exit"
+    variants={tableVariants}
+    transition={{ duration: 0.3, ease: "easeOut" }}
+  >
     <div className="p-4 space-y-4 text-black m-8">
       <div className="flex justify-between items-center">
         <h1 className="text-2xl font-bold">Sales and Inventory Reports</h1>
@@ -288,5 +304,6 @@ export default function Component() {
         </div>
       </div>
     </div>
+    </motion.div>
   )
 }

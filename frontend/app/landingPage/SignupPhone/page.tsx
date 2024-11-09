@@ -7,6 +7,16 @@ const signup = () => {
                                   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
             <div className="card bg-base-100 w-96 shadow-xl">
                 <div className="card-body">
+                <div className="flex items-center justify-center py-4 w-full px-4 lg:px-0">
+    <div className="flex items-center space-x-2 text-lg font-bold">
+        <img src="/logo.png" alt="PositiveFlow Logo" className="w-8 h-auto" />
+        <Link href="/" className="flex items-center">
+            <span className="text-green-700">POS</span>
+            <span className="text-black">itiveFlow</span>
+        </Link>
+    </div>
+</div>
+
                     <div className="card-actions justify-center">
                         <div className='flex flex-col gap-4'>
                             <h1 className='card-title justify-center'>Fill your information</h1>
@@ -38,7 +48,9 @@ const signup = () => {
                                     <p className={styles.label1}>I'd like to receive promotional offers and updates via Whatsapp</p>
                                 </label>
                             </div>
-                            <button className="btn btn-neutral btn-wide">Log in</button>
+                            <Link href="/">
+                            <button className="btn btn-success btn-wide">Request a Quote</button>
+                            </Link>
                             <p className={styles.label}><Link href="./SignupEmail">Use email insted</Link></p>
                         </div>
                     </div>
