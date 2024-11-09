@@ -20,7 +20,7 @@ type AddCustomerModalProps = {
 };
 
 const AddCustomerModal: React.FC<AddCustomerModalProps> = ({ isOpen, onClose, onSave }) => {
-  const [newCustomer, setNewCustomer] = useState<Customer>({ name: '', email: '', phoneNumber: '' });
+  const [newCustomer, setNewCustomer] = useState<Customer>({ name: '', email: '', phoneNumber: '(966) ' });
   const [errors, setErrors] = useState<{ [key: string]: string | null }>({ name: null, email: null, phoneNumber: null });
 
   if (!isOpen) return null;
@@ -29,10 +29,59 @@ const AddCustomerModal: React.FC<AddCustomerModalProps> = ({ isOpen, onClose, on
     const { name, value } = e.target;
     setNewCustomer(prev => ({ ...prev, [name]: value }));
   };
+  const handlePhoneNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    // Remove all non-numeric characters
+    const numbers = e.target.value.replace(/[^\d]/g, '');
+    
+    let formatted = '';
+    
+    // Check if input already starts with 966
+    const hasPrefix = numbers.startsWith('966');
+    
+    // If no prefix, add it
+    if (!hasPrefix && numbers.length > 0) {
+      formatted = '(966) ';
+      // Get only digits after position 0
+      const remainingDigits = numbers;
+      
+      if (remainingDigits.length > 0) {
+        formatted += remainingDigits.slice(0, 3);
+        if (remainingDigits.length > 3) {
+          formatted += `-${remainingDigits.slice(3, 7)}`;
+        }
+      }
+    } else {
+      // Input already has 966, just format remaining digits
+      formatted = '(966) ';
+      const remainingDigits = hasPrefix ? numbers.slice(3) : numbers;
+      
+      if (remainingDigits.length > 0) {
+        formatted += remainingDigits.slice(0, 3);
+        if (remainingDigits.length > 3) {
+          formatted += `-${remainingDigits.slice(3, 7)}`;
+        }
+      }
+    }
+  
+    setNewCustomer(prev => ({ ...prev, phoneNumber: formatted }));
+  };
 
   const validateEmail = (email: string) => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
+    if (!email || email.trim() === '') {
+      return false;
+    }
+  
+    // Check length
+    if (email.length > 254) {
+      return false
+    }
+  
+    const emailRegex = /^(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])$/i;
+  
+    if (!emailRegex.test(email)) {
+      return false
+    }
+    return true;
   };
 
   const validatePhoneNumber = (phoneNumber) => {
@@ -95,8 +144,8 @@ const AddCustomerModal: React.FC<AddCustomerModalProps> = ({ isOpen, onClose, on
             name="phoneNumber"
             label="Phone Number"
             value={newCustomer.phoneNumber}
-            onChange={handleInputChange}
-            placeholder="Enter phone number"
+            onChange={handlePhoneNumberChange}
+            placeholder="(966) 123-4567"
             error={errors.phoneNumber}
           />
           <div className="flex justify-end space-x-3 mt-6">

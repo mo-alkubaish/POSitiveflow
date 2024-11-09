@@ -1,8 +1,8 @@
 "use client"
 
 import * as React from "react"
-import {  format } from "date-fns"
-import { CalendarIcon, ChevronRight, ChevronLeft } from "lucide-react"
+import { format } from "date-fns"
+import { CalendarIcon } from "lucide-react"
 import { DateRange } from "react-day-picker"
 
 import { cn } from "@/lib/utils"
@@ -14,14 +14,19 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover"
 
+const today = new Date()
 export function DatePickerWithRange({
-    date,
-    setDate,
-    className,
-  }: {
-    date: DateRange | undefined,
-    setDate: React.Dispatch<React.SetStateAction<DateRange | undefined>>,
-  } & React.HTMLAttributes<HTMLDivElement>) {
+  date,
+  setDate,
+  minDate,
+  maxDate,
+  className,
+}: {
+  date: DateRange | undefined,
+  setDate: React.Dispatch<React.SetStateAction<DateRange | undefined>>,
+  minDate?: Date,
+  maxDate?: Date,
+} & React.HTMLAttributes<HTMLDivElement>) {
   return (
     <div className={cn("grid gap-2", className)}>
       <Popover>
@@ -30,12 +35,12 @@ export function DatePickerWithRange({
             id="date"
             variant={"outline"}
             className={cn(
-              "w-[300px] justify-start text-left font-normal",
-              "bg-black text-white border-[#f4f4f5]",
-              !date && "text-white/60"
+              "w-[300px] justify-start text-left font-normal text-white",
+              !date && "text-muted-foreground",
+              "hover:bg-gray-300"
             )}
           >
-            <CalendarIcon className="mr-2 h-4 w-4" />
+            <CalendarIcon />
             {date?.from ? (
               date.to ? (
                 <>
@@ -50,7 +55,7 @@ export function DatePickerWithRange({
             )}
           </Button>
         </PopoverTrigger>
-        <PopoverContent className="w-auto p-0 bg-white text-black border-[#f4f4f5]" align="start">
+        <PopoverContent className="w-auto p-0 bg-white" align="start">
           <Calendar
             initialFocus
             mode="range"
@@ -58,7 +63,10 @@ export function DatePickerWithRange({
             selected={date}
             onSelect={setDate}
             numberOfMonths={2}
-            className="rounded-md border-[#f4f4f5]"
+            disabled={{
+              before: minDate,
+              after: maxDate,
+            }}
             classNames={{
               months: "flex flex-col sm:flex-row space-y-4 sm:space-x-4 sm:space-y-0",
               month: "space-y-4",
@@ -66,8 +74,8 @@ export function DatePickerWithRange({
               caption_label: "text-sm font-medium",
               nav: "space-x-1 flex items-center",
               nav_button: "h-7 w-7 bg-transparent p-0 opacity-50 hover:opacity-100 text-black",
-              nav_button_previous: "absolute left-1 text-black",
-              nav_button_next: "absolute right-1 text-black",
+              nav_button_previous: "absolute left-1 text-black", // Change color here
+              nav_button_next: "absolute right-1 text-black", // Change color here
               table: "w-full border-collapse space-y-1",
               head_row: "flex",
               head_cell: "text-black rounded-md w-9 font-normal text-[0.8rem]",

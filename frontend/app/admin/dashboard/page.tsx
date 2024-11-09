@@ -16,7 +16,7 @@ import {
 } from "@/components/ui/table"
 import { ArrowDownIcon, ArrowUpIcon } from "lucide-react"
 import { Bar, BarChart, ResponsiveContainer, XAxis, YAxis, Legend, Tooltip } from "recharts"
-import { DatePickerWithRange } from "./DateRangePicker"
+import { DatePickerWithRange } from "../../components/DateRangePicker"
 
 // This would typically be in a separate file
 const generateMockApiResponse = (startDate: Date, endDate: Date) => {
@@ -24,24 +24,24 @@ const generateMockApiResponse = (startDate: Date, endDate: Date) => {
   const daysDifference = Math.abs(endDate.getTime() - startDate.getTime()) / (1000 * 3600 * 24);
 
   return {
-    totalSales: { value: 5423 + daysDifference * 10, change: 16 },
-    totalOrders: { value: 1893 + daysDifference * 5, change: -1 },
-    averageOrderValue: { value: 12.63 + daysDifference * 0.1, change: 8 },
+    totalSales: { value: Math.round(5423 + daysDifference * 10), change: 16 },
+    totalOrders: { value: Math.round(1893 + daysDifference * 5), change: -1 },
+    averageOrderValue: { value: Math.round(12.63 + daysDifference * 0.1), change: 8 },
     topSellingProducts: [
-      { name: "Basbousa", unitsSold: 300 + daysDifference, revenue: 1800 + daysDifference * 10 },
-      { name: "Maamoul", unitsSold: 250 + daysDifference, revenue: 1250 + daysDifference * 10 },
-      { name: "Knafeh", unitsSold: 200 + daysDifference, revenue: 1000 + daysDifference * 10 },
-      { name: "Qatayef", unitsSold: 190 + daysDifference, revenue: 725 + daysDifference * 10 },
-      { name: "Fatayer", unitsSold: 160 + daysDifference, revenue: 250 + daysDifference * 10 },
+      { name: "Basbousa", unitsSold: Math.round(300 + daysDifference), revenue: Math.round(1800 + daysDifference * 10) },
+      { name: "Maamoul", unitsSold: Math.round(250 + daysDifference), revenue: Math.round(1250 + daysDifference * 10) },
+      { name: "Knafeh", unitsSold: Math.round(200 + daysDifference), revenue: Math.round(1000 + daysDifference * 10) },
+      { name: "Qatayef", unitsSold: Math.round(190 + daysDifference), revenue: Math.round(725 + daysDifference * 10) },
+      { name: "Fatayer", unitsSold: Math.round(160 + daysDifference), revenue: Math.round(250 + daysDifference * 10) },
     ],
     inventorySummary: [
-      { product: "Basbousa", stock: 300 + daysDifference, status: "In Stock", lastUpdated: "01/12/2024" },
-      { product: "Maamoul", stock: 23 + daysDifference, status: "Low Stock", lastUpdated: "01/11/2024" },
-      { product: "Knafeh", stock: 0 + daysDifference, status: "Out of Stock", lastUpdated: "08/12/2023" },
+      { product: "Basbousa", stock: Math.round(300 + daysDifference), status: "In Stock", lastUpdated: "01/12/2024" },
+      { product: "Maamoul", stock: Math.round(23 + daysDifference), status: "Low Stock", lastUpdated: "01/11/2024" },
+      { product: "Knafeh", stock: Math.round(0 + daysDifference), status: "Out of Stock", lastUpdated: "08/12/2023" },
     ],
     recentActivities: [
-      { user: "Sara", action: "added new pricing for Manaeesh", timeAgo: `${2 + daysDifference} hours ago` },
-      { user: "Ali", action: "completed restocking for Qatayef", timeAgo: `${5 + daysDifference} hours ago` },
+      { user: "Sara", action: "added new pricing for Manaeesh", timeAgo: `${Math.round(2 + daysDifference)} hours ago` },
+      { user: "Ali", action: "completed restocking for Qatayef", timeAgo: `${Math.round(5 + daysDifference)} hours ago` },
     ],
     customerFeedback: [
       { feedback: "The packaging is great, and the food arrived hot!", rating: 5 },
@@ -64,7 +64,6 @@ export default function Component() {
       if (date?.from && date?.to) {
         try {
           // In a real scenario, this would be a fetch call to an API endpoint
-          await new Promise(resolve => setTimeout(resolve, 1000)) // Simulate network delay
           const mockApiResponse = generateMockApiResponse(date.from, date.to)
           setData(mockApiResponse)
         } catch (error) {
@@ -91,7 +90,7 @@ export default function Component() {
     <div className="p-4 space-y-4 text-black m-8">
       <div className="flex justify-between items-center">
         <h1 className="text-2xl font-bold">Sales and Inventory Reports</h1>
-        <DatePickerWithRange  date={date} setDate={setDate} />
+        <DatePickerWithRange  date={date} setDate={setDate}  maxDate={today} />
       </div>
 
       <div className="grid gap-4 md:grid-cols-3">
@@ -168,8 +167,8 @@ export default function Component() {
                 <YAxis yAxisId="right" orientation="right" label={{ value: 'Revenue', angle: -90, position: 'insideRight' }} />
                 <Tooltip />
                 <Legend />
-                <Bar yAxisId="left" dataKey="unitsSold" fill="#166534" />
-                <Bar yAxisId="right" dataKey="revenue" fill="#82ca9d" />
+                <Bar yAxisId="left" dataKey="unitsSold" fill="rgba(0, 0, 0, 0.7)" />
+                <Bar yAxisId="right" dataKey="revenue" fill="rgba(34, 139, 34, 0.7)" />
               </BarChart>
             </ResponsiveContainer>
           </CardContent>

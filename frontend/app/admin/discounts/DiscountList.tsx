@@ -20,6 +20,7 @@ import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import EditDiscountModal from "./EditDiscountModal";
 import DeleteModal from "./DeleteModal";
+import { Badge } from "@/components/ui/badge"
 
 export const DiscountList = ({ discounts, updateDiscount, deleteDiscount }) => {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
@@ -96,17 +97,18 @@ export const DiscountList = ({ discounts, updateDiscount, deleteDiscount }) => {
                     <td>{discount.startDate}</td>
                     <td>{discount.endDate}</td>
                     <td>
-                      <span
-                        className={`px-2 py-1 rounded-full text-white ${
+                    <Badge
+                        variant="secondary"
+                        className={
                           discount.status === "Active"
-                            ? "bg-green-500"
+                            ? "bg-green-100 text-green-800"
                             : discount.status === "Scheduled"
-                            ? "bg-yellow-500"
-                            : "bg-red-500"
-                        }`}
+                            ? "bg-yellow-100 text-yellow-800"
+                            : "bg-red-100 text-red-800"
+                        }
                       >
                         {discount.status}
-                      </span>
+                      </Badge>
                     </td>
                     <td>
                       <button

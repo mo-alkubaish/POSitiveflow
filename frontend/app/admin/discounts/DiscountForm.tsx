@@ -15,17 +15,23 @@
 
 
 import React, { useState, useEffect } from "react";
-import DatePicker from "react-datepicker";
+import { DatePickerWithRange } from "../../components/DateRangePicker"
+import { addDays } from "date-fns";
 import "react-datepicker/dist/react-datepicker.css";
 import { determineStatus } from "./discountUtils"; 
 import { motion, AnimatePresence } from "framer-motion";
+import { DateRange } from "react-day-picker";
 
+const today = new Date();
 export const DiscountForm = ({ addDiscount }) => {
   const [discountName, setDiscountName] = useState('');
   const [discountType, setDiscountType] = useState('Percentage');
   const [discountValue, setDiscountValue] = useState('');
-  const [startDate, setStartDate] = useState(null);
-  const [endDate, setEndDate] = useState(null);
+
+  const [dateRange, setDateRange] = useState<DateRange | undefined>({
+    from: today,
+    to: addDays(today, 7)
+  });
   const [applyTo, setApplyTo] = useState('All items');
   const [isValueError, setIsValueError] = useState(false);
 
@@ -49,12 +55,12 @@ export const DiscountForm = ({ addDiscount }) => {
   };
 
   const handleSubmit = () => {
-    if (new Date(endDate) < new Date(startDate)) {
-      alert("End Date cannot be before Start Date.");
+    if (!dateRange.from || !dateRange.to || dateRange.to < dateRange.from) {
+      alert("Please select valid date range.");
       return;
     }
 
-    if (!discountName || !discountValue || !startDate || !endDate || isValueError) {
+    if (!discountName || !discountValue || isValueError) {
       alert('Please fill in all fields correctly.');
       return;
     }
@@ -63,9 +69,9 @@ export const DiscountForm = ({ addDiscount }) => {
       name: discountName,
       type: discountType,
       value: discountValue,
-      startDate: startDate.toISOString().substring(0, 10),
-      endDate: endDate.toISOString().substring(0, 10),
-      status: determineStatus(new Date(startDate), new Date(endDate))
+      startDate: dateRange.from.toISOString().substring(0, 10),
+      endDate: dateRange.to.toISOString().substring(0, 10),
+      status: determineStatus(dateRange.from, dateRange.to)
     };
 
     addDiscount(newDiscount);
@@ -77,8 +83,10 @@ export const DiscountForm = ({ addDiscount }) => {
     setDiscountName('');
     setDiscountType('Percentage');
     setDiscountValue('');
-    setStartDate(null);
-    setEndDate(null);
+    setDateRange({
+      from: new Date(),
+      to: addDays(new Date(), 7)
+    });
     setApplyTo('All items');
     setIsValueError(false);
   };
@@ -149,23 +157,11 @@ export const DiscountForm = ({ addDiscount }) => {
             <option value="Percentage">Percentage</option>
             <option value="Fixed Amount">Fixed Amount</option>
           </select>
-          <div>
-            <label htmlFor="startDate" className="block text-sm font-medium text-gray-700">Start Date</label>
-            <DatePicker
-              selected={startDate}
-              onChange={date => setStartDate(date)}
-              className="input input-bordered w-full border-gray-300 bg-gray-50 text-black"
-              dateFormat="yyyy-MM-dd"
-            />
-          </div>
-          <div>
-            <label htmlFor="endDate" className="block text-sm font-medium text-gray-700">End Date</label>
-            <DatePicker
-              selected={endDate}
-              onChange={date => setEndDate(date)}
-              className="input input-bordered w-full border-gray-300 bg-gray-50 text-black"
-              dateFormat="yyyy-MM-dd"
-              minDate={startDate}
+          <div className="col-span-2">
+            <DatePickerWithRange
+              date={dateRange}
+              setDate={setDateRange} 
+              minDate={new Date()}
             />
           </div>
         </div>
