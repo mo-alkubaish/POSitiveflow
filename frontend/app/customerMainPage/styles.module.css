@@ -1,0 +1,102 @@
+.item{
+    box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.4);
+    background-color: white;
+    width: 80vw;
+    padding: 10px;
+}
+.container{
+    position: absolute;
+    left: 50%;
+    top: 60%;
+    transform: translate(-50%,-50%);
+    
+}
+.border{
+    display: flex;
+    flex-grow: 1;
+    flex-shrink: 0;
+    flex-direction: column;
+    border: 1px dashed lightgray;
+    gap: 30px;
+    background-color: #E5E5E5;
+    
+}
+.header{
+    position: relative;
+    background-color: white;
+    height: 9vh;
+    margin-bottom: 20px;
+}
+.logo{
+    padding:10px;
+}
+.avatarImg{
+    margin: 10px;
+    position: relative;
+    top: -57px;
+    border-radius: 50px;
+
+}
+.bell{
+    cursor: pointer;
+    position: relative;
+    top: -45px;
+    height: 30px;
+}
+.summary{
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: space-evenly;
+    
+}
+.extraSpace{
+    height: 20vh;
+}
+.date{
+    position: relative;
+    width: 200px;
+    display: flex;
+    flex-direction: column;
+    margin-left: auto;
+    gap: 10px;
+    text-align: center;
+    align-items: center;
+}
+.rowFlex{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+
+}
+.colFlex{
+    display: flex;
+    flex-direction: column;
+
+}
+.button1{
+    margin-left: auto;
+}
+.primaryFont{
+    font-size: 30px;
+    font-weight: bold;
+}
+.secFont{
+    font-size: 16px;
+    font-weight: bold;
+    padding: 15px;
+}
+.secFont2{
+    font-size: 14px;
+    color: gray;
+}
+.textIncards{
+    position: relative;
+    padding-left: 20px;
+    font-weight: bold;
+    font-size: 20px;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+}
