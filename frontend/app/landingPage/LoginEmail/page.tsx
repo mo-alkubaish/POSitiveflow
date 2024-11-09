@@ -5,37 +5,36 @@ import styles from "./styles.module.css";
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
-// Assuming users data is stored locally for this example
 const users = [
   {
     "id": 1,
-    "name": "Aminah Al-Baqari",
+    "name": "Lionel Messi",
     "phone": "(966) 555-0222",
-    "email": "aminah@icloud.com",
+    "email": "messi@icloud.com",
     "password": "1234",
     "job": "cashier"
   },
   {
     "id": 2,
-    "name": "Bilal Farooqi",
+    "name": "Cristiano Ronaldo",
     "phone": "(966) 555-0333",
-    "email": "bilal@icloud.com",
+    "email": "ronaldo@icloud.com",
     "password": "1234",
     "job": "store owner"
   },
   {
     "id": 3,
-    "name": "Carmen Santiago",
+    "name": "Kylian Mbappé",
     "phone": "(966) 555-0444",
-    "email": "carmen@icloud.com",
+    "email": "mbappe@icloud.com",
     "password": "1234",
     "job": "inventory manager"
   },
   {
     "id": 4,
-    "name": "Derek Muller",
+    "name": "Jude Bellingham",
     "phone": "(966) 555-0555",
-    "email": "derek@icloud.com",
+    "email": "bellingham@icloud.com",
     "password": "1234",
     "job": "customer"
   }

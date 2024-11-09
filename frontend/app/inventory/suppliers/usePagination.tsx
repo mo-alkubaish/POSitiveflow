@@ -1,3 +1,6 @@
+// simmilar to product file
+
+
 import { useState } from 'react';
 
 function usePagination(totalItems: number, itemsPerPage: number) {

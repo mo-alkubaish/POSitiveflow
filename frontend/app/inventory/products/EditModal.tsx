@@ -1,3 +1,38 @@
+/**
+ * EditModal provides an interface for editing the details of a product. It presents a form within a modal,
+ * allowing users to update fields such as name, SKU, price, category, stock, and image URL.
+ *
+ * Features:
+ * - Form Inputs: Allows editing of product details with validation for price and stock to ensure data integrity.
+ * - Dynamic Form Handling: Populates form fields with existing product data when the modal opens, providing a seamless editing experience.
+ * - Validation: Validates form data to ensure that price and stock inputs are numerical and not empty where required.
+ * - Error Display: Shows error messages under fields where validation fails, aiding users in correcting their entries.
+ *
+ * Props:
+ * - `isOpen`: Boolean indicating whether the modal is visible.
+ * - `product`: The product object containing existing values for the form fields.
+ * - `onSave`: Function to be called with the updated product data on form submission.
+ * - `onCancel`: Function to be called to close the modal without saving changes.
+ *
+ * Behavior:
+ * - The modal appears based on the `isOpen` prop and can be closed via the `onCancel` function.
+ * - Upon submission, the form is validated and errors are set and displayed if validation fails. If the form is valid, `onSave` is invoked with the updated data.
+ *
+ * Example Usage:
+ * ```jsx
+ * <EditModal
+ *   isOpen={showEditModal}
+ *   product={selectedProduct}
+ *   onSave={handleProductUpdate}
+ *   onCancel={closeModal}
+ * />
+ * ```
+ *
+ * This modal is designed to facilitate quick updates to product information with minimal disruption to the workflow,
+ * ensuring data is valid and providing users with immediate feedback on any errors.
+ */
+
+
 import React, { useState, useEffect } from 'react';
 
 function EditModal({ isOpen, product, onSave, onCancel }) {

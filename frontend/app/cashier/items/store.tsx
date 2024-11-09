@@ -99,8 +99,13 @@ const Store = ({selectedDraft}) => {
     };
 
     const removeFromCart = (productId) => {
-        setCarts(currentCart.filter(item => item.id !== productId));
-    };
+        const updatedCart = currentCart.filter(item => item.id !== productId);
+        setCarts(prevCarts => ({
+            ...prevCarts,
+            [selectedDraft]: [...updatedCart]
+        }));}
+
+
     const handleCheckout = () => {
         if (currentCart.length === 0) {
             // Optional: Show error/warning if cart is empty
@@ -139,7 +144,7 @@ const Store = ({selectedDraft}) => {
 
     const filteredProducts = products.filter(product => (
         (!selectedCategory || product.category === selectedCategory) &&
-        (!searchTerm || product.name.toLowerCase().includes(searchTerm))
+        (!searchTerm || product.name.toLowerCase().includes(searchTerm) || !searchTerm || product.sku.toLowerCase().includes(searchTerm) )
     ));
 
     const itemVariants = {

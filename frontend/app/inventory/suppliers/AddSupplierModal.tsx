@@ -1,3 +1,5 @@
+// simmilar to product file
+
 import React, { useState } from 'react';
 
 type Supplier = {

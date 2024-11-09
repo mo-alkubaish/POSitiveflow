@@ -1,3 +1,25 @@
+/**
+ * DeleteConfirmationModal displays a modal dialog asking for confirmation before deleting a product.
+ *
+ * Functionality:
+ * - The modal appears when the `isOpen` prop is true, providing a focused task environment by dimming the rest of the screen.
+ * - It presents a stark warning that the deletion is irreversible, reinforcing the seriousness of the action.
+ *
+ * Props:
+ * - `isOpen`: Boolean controlling the visibility of the modal. If false, the modal doesn't render.
+ * - `onCancel`: Function to call when the user decides against deletion, closing the modal.
+ * - `onConfirm`: Function to call when the user confirms deletion, presumably to handle the deletion logic.
+ *
+ * Styling:
+ * - The modal is designed to grab attention with a clear layout and contrasting buttons.
+ * - It uses Tailwind CSS for styling, ensuring consistency with the overall application design.
+ * - Button styles are explicitly set to ensure they match the modal's warning context, with subtle hover effects for usability.
+ *
+ * Usage:
+ * - This modal is utilized in contexts where deleting a product is an option, ensuring users are aware of the consequences and confirm their intention.
+ */
+
+
 import React from 'react';
 
 function DeleteConfirmationModal({ isOpen, onCancel, onConfirm }) {

@@ -1,3 +1,6 @@
+// simmilar to product file
+
+
 const searchSuppliers = (suppliers, searchTerm) => {
   if (!searchTerm) return suppliers;
   return suppliers.filter(supplier =>

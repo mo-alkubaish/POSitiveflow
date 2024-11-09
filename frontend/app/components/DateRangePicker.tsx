@@ -1,3 +1,24 @@
+/**
+ * DatePickerWithRange component provides a UI for selecting a date range within specified bounds.
+ * It integrates a calendar popover from a UI library to allow users to pick start and end dates.
+ * 
+ * Props:
+ * - `date`: (DateRange | undefined) - The current date range selected.
+ * - `setDate`: (React.Dispatch<React.SetStateAction<DateRange | undefined>>) - Function to update the date range state.
+ * - `minDate`: (Date | undefined) - Optional minimum date that can be selected.
+ * - `maxDate`: (Date | undefined) - Optional maximum date that can be selected.
+ * - `className`: (string | undefined) - Optional CSS class for custom styling.
+ * 
+ * Features:
+ * - Popover: Uses the Popover component to display the calendar in a dropdown format.
+ * - Calendar: Shows one or two month views where dates can be selected. Dates outside the specified range are disabled.
+ * - Responsive Design: The calendar adjusts its layout and functionality based on device screen size.
+ * - Custom Styling: Implements several classNames for custom styling of calendar components like navigation buttons, days, selected days, etc.
+ * 
+ * The component elegantly handles date selection within specified bounds and provides clear feedback on the selected range through formatted text displayed on the trigger button.
+ */
+
+
 "use client"
 
 import * as React from "react"

@@ -1,3 +1,22 @@
+/**
+ * Invoice component provides a detailed view of an invoice with functionality to print the page or navigate back to the customer page.
+ *
+ * Functionality:
+ * - Displays an invoice with details such as invoice number, date, customer information, items purchased, and total amounts.
+ * - Provides buttons for printing the invoice and cancelling (redirecting to the customer management page).
+ *
+ * Use of Hooks:
+ * - useRouter from Next.js is used for navigation back to the customer page on clicking the 'Cancel' button.
+ * - The 'Print' button triggers the browser's print functionality to print the invoice directly from the page.
+ *
+ * Styling:
+ * - Uses Tailwind CSS for styling components and layouts, including responsive designs that accommodate various screen sizes.
+ * - The invoice layout is centered and formatted for clear readability and printability.
+ *
+ * The component is designed to be simple yet functional, catering to basic invoicing needs with easy navigation and operation.
+ */
+
+
 "use client";
 import React from 'react';
 import { useRouter } from 'next/navigation';

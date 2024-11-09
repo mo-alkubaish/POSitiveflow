@@ -1,5 +1,37 @@
+/**
+ * ProductManagement is a component that provides a user interface for managing products. It displays a list of products with
+ * options to add, edit, or delete each product. The component incorporates a search function to filter through products, 
+ * pagination for managing large datasets, and dynamically generated barcodes for each product SKU.
+ *
+ * Features:
+ * - Search: Users can search products by name, SKU, or price.
+ * - Pagination: Navigate through products in a paginated format.
+ * - Add/Edit/Delete: Functionalities to modify the product list dynamically.
+ * - Barcode Generation: Each product's SKU is used to generate a barcode using the JsBarcode library.
+ *
+ * Props:
+ * - None
+ *
+ * State:
+ * - searchTerm: The current string used to filter products.
+ * - products: The current list of all products.
+ * - editableProduct: The product currently being edited.
+ * - isEditModalOpen: Boolean to display the edit modal.
+ * - isDeleteModalOpen: Boolean to display the delete confirmation modal.
+ * - isAddModalOpen: Boolean to display the add product modal.
+ *
+ * Usage:
+ * ```jsx
+ * <ProductManagement />
+ * ```
+ *
+ * This component handles the CRUD (Create, Read, Update, Delete) operations for products in a retail setting, making it a central
+ * part of the product management system. The UI is built using Tailwind CSS for styling, ensuring a consistent and responsive design.
+ */
+
+
 "use client";
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { MagnifyingGlassIcon } from "@heroicons/react/24/solid";
 import searchProducts from "./searchProducts";
 import productsData from "../../data/products.json";
@@ -7,7 +39,26 @@ import usePagination from "./usePagination";
 import { motion } from 'framer-motion';
 import EditModal from './EditModal'; 
 import DeleteConfirmationModal from './DeleteConfirmationModal'; 
-import AddProductModal from './AddProductModal'; // Ensure you have this component similar to AddCustomerModal
+import AddProductModal from './AddProductModal';
+import JsBarcode from 'jsbarcode';
+
+const Barcode = ({ sku }) => {
+  const barcodeRef = React.useRef(null);
+
+  useEffect(() => {
+    if (barcodeRef.current) {
+      JsBarcode(barcodeRef.current, sku, {
+        format: "CODE128",
+        lineColor: "#000",
+        width: 2,
+        height: 40,
+        displayValue: false
+      });
+    }
+  }, [sku]);
+
+  return <svg ref={barcodeRef} className="barcode" />;
+};
 
 const ProductManagement = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -15,7 +66,7 @@ const ProductManagement = () => {
   const [editableProduct, setEditableProduct] = useState(null);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-  const [isAddModalOpen, setIsAddModalOpen] = useState(false); // Add state for opening add modal
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
 
   const filteredProducts = searchProducts(products, searchTerm);
   const { currentPage, totalPages, changePage, indexOfFirstItem, indexOfLastItem } = usePagination(filteredProducts.length, 8);
@@ -45,12 +96,12 @@ const ProductManagement = () => {
   const handleCancel = () => {
     setIsEditModalOpen(false);
     setIsDeleteModalOpen(false);
-    setIsAddModalOpen(false); // Close add modal
+    setIsAddModalOpen(false);
     setEditableProduct(null);
   };
 
   const handleAddProduct = (newProduct) => {
-    setProducts([...products, newProduct]); // Add new product to the list
+    setProducts([...products, newProduct]);
     setIsAddModalOpen(false);
   };
 
@@ -104,6 +155,7 @@ const ProductManagement = () => {
                 <th className="py-2 px-4">SKU</th>
                 <th className="py-2 px-4">Price</th>
                 <th className="py-2 px-4">Stock</th>
+                <th className="py-2 px-4">Barcode</th>
                 <th className="py-2 px-4 rounded-r-lg text-right">Actions</th>
               </tr>
             </thead>
@@ -115,6 +167,9 @@ const ProductManagement = () => {
                     <td className="py-3 px-4 text-black">{product.sku}</td>
                     <td className="py-3 px-4 text-black">{product.price}</td>
                     <td className="py-3 px-4 text-black">{product.stock}</td>
+                    <td className="py-3 px-4">
+                      <Barcode sku={product.sku} />
+                    </td>
                     <td className="py-3 px-4 text-right space-x-2">
                       <button className="text-gray-500 hover:text-gray-700" onClick={() => handleEditClick(product)}>Edit</button>
                       <button className="text-gray-500 hover:text-gray-700" onClick={() => handleDeleteClick(product)}>Delete</button>
@@ -123,7 +178,7 @@ const ProductManagement = () => {
                 ))
               ) : (
                 <tr>
-                  <td colSpan={5} className="text-center text-xl font-bold py-8 text-black">
+                  <td colSpan={6} className="text-center text-xl font-bold py-8 text-black">
                     No Products found...
                   </td>
                 </tr>

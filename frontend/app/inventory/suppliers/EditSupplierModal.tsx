@@ -1,3 +1,6 @@
+// simmilar to product file
+
+
 import React, { useState, useEffect } from 'react';
 
 function EditSupplierModal({ isOpen, supplier, onSave, onCancel }) {

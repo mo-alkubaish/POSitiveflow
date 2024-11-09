@@ -1,3 +1,20 @@
+/**
+ * DashboardLayout serves as a higher-order component that provides a consistent layout for various admin pages.
+ * It includes a common navigation bar and dynamically renders child components.
+ * 
+ * Features:
+ * - Navbar: Includes a pre-defined set of navigation links tailored for administrative tasks.
+ * - Dynamic Content: The component renders child content passed through its `children` prop, enabling reusability across different admin pages.
+ * 
+ * Usage:
+ * - This layout is typically used to wrap around specific admin pages (e.g., Dashboard, Customer Management) to provide a uniform interface with navigation.
+ * 
+ * Props:
+ * - `children`: React.ReactNode - Represents the content of specific admin pages that will be displayed within the layout.
+ */
+
+
+
 import React from 'react';
 import Navbar from '../components/Navbar';
 

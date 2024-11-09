@@ -1,12 +1,5 @@
-/**
- * SupplierManagement component provides an interface for managing supplier records. It includes:
- * - Search functionality to filter suppliers by name, email, or phone.
- * - Pagination to manage large lists of suppliers.
- * - Modals for adding, editing, and deleting suppliers with validation and confirmation.
- * - Action buttons for each supplier entry, enabling editing or deletion.
- * 
- * This component leverages useState for state management, Framer Motion for animations, and custom hooks for pagination.
- */
+// simmilar to product file
+
 
 "use client";
 import React, { useState } from 'react';

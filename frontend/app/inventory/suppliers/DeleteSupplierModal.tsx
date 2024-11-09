@@ -1,3 +1,6 @@
+// simmilar to product file
+
+
 import React from 'react';
 
 function DeleteSupplierModal({ isOpen, onCancel, onConfirm }) {

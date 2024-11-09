@@ -1,3 +1,26 @@
+/**
+ * Component serves as a dashboard for displaying detailed sales and inventory reports,
+ * integrating multiple UI components and data visualization elements.
+ *
+ * Features:
+ * - Date Range Picker: Allows users to select specific date ranges for generating reports.
+ * - Dynamic Data Display: Data for sales, orders, and inventory are dynamically generated based on the selected date range.
+ * - Responsive Charts: Utilizes Recharts for visualizing sales trends and top-selling products.
+ * - Detailed Tables: Provides tables for top-selling products and inventory summaries with status indicators.
+ * - Recent Activities and Customer Feedback: Displays recent user actions and customer feedback with avatars and contextual information.
+ *
+ * Data Generation:
+ * - `generateMockApiResponse`: Function to simulate API responses based on the date range, providing mock data for the component.
+ *
+ * State Management:
+ * - Uses useState to manage the state of the date range and the fetched data.
+ * - Incorporates motion for UI animations, enhancing the user experience by animating the entrance and updates of report sections.
+ *
+ * This component acts as a comprehensive hub for accessing and visualizing various metrics important for business operations,
+ * such as sales performance and inventory status, which are critical for strategic decision-making.
+ */
+
+
 'use client'
 
 import { useEffect, useState } from "react"

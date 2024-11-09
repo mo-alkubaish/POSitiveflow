@@ -4,6 +4,31 @@
 
 POSitiveFlow is designed to streamline operations and enhance customer experiences for small to medium-sized businesses. Utilizing modern technologies such as Next.js for responsive frontend and Nest.js for scalable backend services, this system integrates seamlessly with WhatsApp for sending digital receipts and managing customer loyalty programs.
 
+## Dummy User Accounts
+
+To facilitate testing and demonstration for the log in button, the following dummy user accounts are pre-configured:
+
+- **Lionel Messi** (Cashier)
+  - Email: messi@icloud.com
+  - Password: 1234
+  - Phone: (966) 555-0222
+
+- **Cristiano Ronaldo** (Store Owner)
+  - Email: ronaldo@icloud.com
+  - Password: 1234
+  - Phone: (966) 555-0333
+
+- **Kylian Mbappé** (Inventory Manager)
+  - Email: mbappe@icloud.com
+  - Password: 1234
+  - Phone: (966) 555-0444
+
+- **Jude Bellingham** (Customer)
+  - Email: bellingham@icloud.com
+  - Password: 1234
+  - Phone: (966) 555-0555
+
+
 ## Features
 
 ### Store Owners/Managers
@@ -30,7 +55,7 @@ Below is an overview of the main folders and files in the project:
   - ⁠ nest-cli.json ⁠: Nest.js CLI configuration.
   - ⁠ Dockerfile ⁠: Docker configuration for backend setup.
 •⁠  ⁠⁠ /frontend ⁠: Contains the Next.js frontend application.
-  - ⁠ /pages ⁠: React components that correspond to web pages.
+  - ⁠ /user/pages ⁠: React components that correspond to web pages.
   - ⁠ /components ⁠: Reusable UI components.
   - ⁠ /public ⁠: Static assets like images and fonts.
   - ⁠ next.config.ts ⁠: Configuration file for Next.js.
@@ -52,7 +77,9 @@ To get the project up and running on your local machine, follow these steps:
    ```bash
    git clone https://github.com/mo-alkubaish/POSitiveflow
    cd POSitiveflow
-   docker compose up -d
+   cd frontend
+   npm install
+   npm run dev
    ```
 
 ## Contributing
@@ -74,4 +101,3 @@ Distributed under the MIT License. See LICENSE for more information.
 •⁠  ⁠Next.js frontend framework
 
 
-Feel free to adjust the repository URL and any other specific information to suit your actual setup.

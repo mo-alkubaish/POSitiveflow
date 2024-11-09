@@ -1,3 +1,28 @@
+/**
+ * AddProductModal provides a modal form for adding new products to the inventory.
+ *
+ * Features:
+ * - Form Input: Collects information such as name, SKU, price, category, stock level, and image URL.
+ * - Validation: Ensures that all required fields are filled and that the inputs for price and stock are numbers.
+ * - Error Handling: Displays error messages beneath inputs if validation fails.
+ * - Dynamic Feedback: Updates the form state and error messages in real time as the user types.
+ *
+ * Props:
+ * - `isOpen`: Boolean that controls the visibility of the modal.
+ * - `onClose`: Function to be called to close the modal.
+ * - `onSave`: Function that is called to save the new product once validation passes.
+ *
+ * State:
+ * - `newProduct`: Holds the current state of the product being entered.
+ * - `errors`: Contains any error messages for form fields to be displayed to the user.
+ *
+ * Child Components:
+ * - `InputField`: A reusable input component used for gathering product information. It accepts props for customization and validation.
+ *
+ * This modal is designed to provide a user-friendly interface for entering new product data, ensuring data integrity with comprehensive validation.
+ */
+
+
 import React, { useState } from 'react';
 
 type Product = {
