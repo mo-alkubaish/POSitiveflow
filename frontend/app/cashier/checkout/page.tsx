@@ -32,7 +32,7 @@
 
 
 "use client";
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, Suspense } from 'react';
 import Link from 'next/link';
 import CurrentTransaction from './CurrentTransaction';
 import CustomerInformation from './CustomerInformation';
@@ -41,7 +41,7 @@ import { DiscountProvider } from './DiscountContext';
 import Payment from './payment';
 import { useSearchParams } from 'next/navigation';
 
-const Dashboard = () => {
+const DashboardContent = () => {
     const searchParams = useSearchParams();
     const cartData = JSON.parse(decodeURIComponent(searchParams.get('cart') || '[]'));
     const [cart, setCart] = useState(cartData);
@@ -60,48 +60,53 @@ const Dashboard = () => {
     useEffect(() => {
         return () => clearTimeout(closeTimeout.current);
     }, []);
-
-    return (        
-        <DiscountProvider>
-            <div className="relative bg-gray-100" style={{ paddingTop: '4rem' }}>
-                <div className="p-2 flex items-center" style={{ position: 'fixed', top: 0, left: 0, right: 0, zIndex: 1000 }}>
-                    <div className="flex items-center space-x-2 text-lg font-bold pl-4">
-                        <img src="/logo.png" alt="PositiveFlow Logo" className="w-8 h-auto" />
-                        <span className='text-black'><span className="text-green-700">POS</span>itiveFlow</span>
-                    </div>
-                    <div onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} style={{ position: 'absolute', right: '1rem', top: '50%', transform: 'translateY(-50%)' }}>
-                        <div className="p-2 rounded-full bg-white hover:bg-gray-100 cursor-pointer">
-                            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5.121 17.804A10.97 10.97 0 0012 21c2.59 0 4.984-.876 6.879-2.324M15 11a4 4 0 10-8 0 4 4 0 008 0z" />
-                            </svg>
-                        </div>
-                        {isDropdownOpen && (
-                            <div className="absolute right-0 mt-2 w-48 bg-white shadow-lg z-50">
-                                <ul className="text-gray-700">
-                                    <Link href="/cashier/shift" passHref>
-                                        <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">Sign Out</li>
-                                    </Link>
-                                </ul>
-                            </div>
-                        )}
-                    </div>
+    return (            <DiscountProvider>
+        <div className="relative bg-gray-100" style={{ paddingTop: '4rem' }}>
+            <div className="p-2 flex items-center" style={{ position: 'fixed', top: 0, left: 0, right: 0, zIndex: 1000 }}>
+                <div className="flex items-center space-x-2 text-lg font-bold pl-4">
+                    <img src="/logo.png" alt="PositiveFlow Logo" className="w-8 h-auto" />
+                    <span className='text-black'><span className="text-green-700">POS</span>itiveFlow</span>
                 </div>
-                <div className="flex justify-center p-4">
-                    <div className="max-w-7xl w-full"> 
-                        <div className="flex flex-col md:flex-row gap-8"> 
-                            <div className="flex flex-col w-full space-y-4">
-                                <CurrentTransaction items={cart} setItems={setCart} />
-                                <Payment items={cart} />
-                            </div>
-                            <div className="flex flex-col w-full md:w-[600px] space-y-4"> 
-                                <CustomerInformation />
-                                <QuickActions items={cart} />
-                            </div>
+                <div onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} style={{ position: 'absolute', right: '1rem', top: '50%', transform: 'translateY(-50%)' }}>
+                    <div className="p-2 rounded-full bg-white hover:bg-gray-100 cursor-pointer">
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5.121 17.804A10.97 10.97 0 0012 21c2.59 0 4.984-.876 6.879-2.324M15 11a4 4 0 10-8 0 4 4 0 008 0z" />
+                        </svg>
+                    </div>
+                    {isDropdownOpen && (
+                        <div className="absolute right-0 mt-2 w-48 bg-white shadow-lg z-50">
+                            <ul className="text-gray-700">
+                                <Link href="/cashier/shift" passHref>
+                                    <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">Sign Out</li>
+                                </Link>
+                            </ul>
+                        </div>
+                    )}
+                </div>
+            </div>
+            <div className="flex justify-center p-4">
+                <div className="max-w-7xl w-full"> 
+                    <div className="flex flex-col md:flex-row gap-8"> 
+                        <div className="flex flex-col w-full space-y-4">
+                            <CurrentTransaction items={cart} setItems={setCart} />
+                            <Payment items={cart} />
+                        </div>
+                        <div className="flex flex-col w-full md:w-[600px] space-y-4"> 
+                            <CustomerInformation />
+                            <QuickActions items={cart} />
                         </div>
                     </div>
                 </div>
             </div>
-        </DiscountProvider>
+        </div>
+    </DiscountProvider>);
+}
+const Dashboard = () => {
+
+    return (      
+        <Suspense fallback={<div>Loading...</div>}>
+            <DashboardContent />
+        </Suspense>
     );
 };
 
