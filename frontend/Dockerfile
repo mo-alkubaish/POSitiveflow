@@ -46,8 +46,7 @@ RUN adduser --system --uid 1001 nextjs
 COPY --from=builder /app/public ./public
 
 # Copy the next.config.js and next-i18next.config.js files
-COPY --from=builder /app/next.config.mjs ./next.config.mjs
-COPY --from=builder /app/next-i18next.config.js ./next-i18next.config.js
+COPY --from=builder /app/next.config.ts ./next.config.ts
 
 # Set the correct permission for prerender cache
 RUN mkdir .next
