@@ -46,7 +46,7 @@ const HeroSection = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1 }}
         >
-          <div style={{ width: '600px', height: '400px' }}>
+          <div className="w-[350px] h-[400px] md:w-[600px]">
             <Bar data={salesData} options={{
               responsive: true,
               maintainAspectRatio: false,

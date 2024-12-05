@@ -20,7 +20,6 @@
  * This section is designed to offer users a preview of role-specific features, enhancing understanding of the platform's versatility.
  */
 
-
 "use client";
 
 import React, { useState } from "react";
@@ -59,7 +58,7 @@ const UserDemosSection = () => {
   const router = useRouter();
 
   const renderDemoFeatures = (features) => (
-    <ul className="list-disc ml-4 text-left">
+    <ul className="list-disc pl-4 text-left">
       {features.map((feature, index) => (
         <motion.li
           key={index}
@@ -80,7 +79,7 @@ const UserDemosSection = () => {
 
   return (
     <section id="user-demos" className="py-20 bg-base-100">
-      <div className="container mx-auto text-center">
+      <div className="container mx-auto px-4 sm:px-6 text-center">
         {/* Animated Title */}
         <motion.h2
           className="text-4xl font-bold text-success mb-6"
@@ -102,7 +101,7 @@ const UserDemosSection = () => {
         
         {/* Animated Role Selection Buttons */}
         <motion.div
-          className="flex justify-center mb-8 space-x-4"
+          className="flex justify-center flex-wrap mb-8 gap-2"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.4 }}
@@ -111,7 +110,7 @@ const UserDemosSection = () => {
             <button
               key={role}
               onClick={() => setSelectedRole(role)}
-              className={`btn ${selectedRole === role ? 'btn-success' : 'btn-outline'}`}
+              className={`btn ${selectedRole === role ? 'btn-success' : 'btn-outline'} px-2 py-1 text-sm sm:text-base`}
             >
               {demoContent[role].title}
             </button>

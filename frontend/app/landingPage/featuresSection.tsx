@@ -20,7 +20,7 @@ import { motion } from 'framer-motion';
 const FeaturesSection = () => {
   return (
     <section id="features" className="py-20">
-      <div className="container mx-auto text-center">
+      <div className="container mx-auto px-4 sm:px-6 text-center">
         {/* Title with Animation */}
         <motion.h2
           className="text-4xl font-bold text-success"
@@ -41,7 +41,7 @@ const FeaturesSection = () => {
           Our platform offers a comprehensive set of tools for retail management.
         </motion.p>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 px-2 sm:px-0">
           {/* Individual feature cards with animations triggered on view */}
           <motion.div
             className="card bg-base-100 shadow-md"

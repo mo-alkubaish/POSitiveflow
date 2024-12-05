@@ -65,8 +65,8 @@ const PurchaseHistoryDashboard = () => {
             <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
 
             {/* Header Section */}
-            <div className="p-2 flex items-center fixed top-0 left-0 right-0 z-1000 bg-gray-100">
-                <div className="flex items-center space-x-2 text-lg font-bold pl-4">
+            <div className="px-4 sm:px-6 py-2 flex items-center fixed top-0 left-0 right-0 z-50 bg-gray-100">
+                <div className="flex items-center space-x-2 text-lg font-bold">
                     <img src="/logo.png" alt="PositiveFlow Logo" className="w-8 h-auto" />
                     <span className="text-black">
                         <span className="text-green-700">POS</span>itiveFlow
@@ -75,7 +75,7 @@ const PurchaseHistoryDashboard = () => {
                 <div
                     onMouseEnter={handleMouseEnter}
                     onMouseLeave={handleMouseLeave}
-                    style={{ position: 'absolute', right: '1rem', top: '50%', transform: 'translateY(-50%)' }}
+                    className="ml-auto"
                 >
                     <div className="p-2 rounded-full bg-white hover:bg-gray-100 cursor-pointer">
                         <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -103,13 +103,13 @@ const PurchaseHistoryDashboard = () => {
             </div>
 
             {/* Main Dashboard Content */}
-            <div className="p-8 mt-16">
+            <div className="px-4 sm:px-6 py-8 mt-16">
                 <h1 className="text-2xl font-semibold mb-6">Purchase History Dashboard</h1>
 
                 {/* Order Summary Section */}
                 <div className="bg-white p-6 rounded-lg shadow-lg mb-8">
                     <h2 className="text-lg font-semibold mb-4">Order Summary</h2>
-                    <div className="grid grid-cols-3 gap-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                         {Object.entries(orderSummary).map(([key, value]) => (
                             <motion.div
                                 key={key}
@@ -135,7 +135,7 @@ const PurchaseHistoryDashboard = () => {
                     {recentOrders.map((order, index) => (
                         <motion.div
                             key={order.id}
-                            className="flex justify-between items-center p-4 mb-4 bg-gray-50 rounded-lg shadow"
+                            className="flex flex-col sm:flex-row justify-between items-center p-4 mb-4 bg-gray-50 rounded-lg shadow"
                             initial={{ opacity: 0, x: -20 }}
                             animate={{ opacity: 1, x: 0 }}
                             transition={{ duration: 0.3, delay: 0.1 * index }}
@@ -144,28 +144,27 @@ const PurchaseHistoryDashboard = () => {
                                 <span className="font-semibold text-gray-800">Order #{order.id}</span>
                                 <span className="text-gray-600">${order.total.toFixed(2)} • {order.items} items</span>
                             </div>
-                            <div className="text-gray-400 text-sm text-right">
+                            <div className="text-gray-400 text-sm text-center mt-2 sm:mt-0">
                                 Ordered on <br /> {order.date}
                             </div>
-                            <div className="flex items-center space-x-2">
+                            <div className="flex items-center space-x-2 mt-2 sm:mt-0">
                                 {order.rated ? (
-                                                                        <Link href="/customer/feedback" passHref>
-                                    <button className="bg-gray-800 text-white px-4 py-1 rounded-md hover:scale-105 transition-transform">
-                                        Edit Feedback
-                                    </button>
+                                    <Link href="/customer/feedback" passHref>
+                                        <button className="bg-gray-800 text-white px-4 py-1 rounded-md hover:scale-105 transition-transform">
+                                            Edit Feedback
+                                        </button>
                                     </Link>
                                 ) : (
                                     <Link href="/customer/feedback" passHref>
-
-                                    <button className="bg-gray-800 text-white px-4 py-1 rounded-md hover:scale-105 transition-transform">
-                                        Submit Feedback
-                                    </button>
+                                        <button className="bg-gray-800 text-white px-4 py-1 rounded-md hover:scale-105 transition-transform">
+                                            Submit Feedback
+                                        </button>
                                     </Link>
                                 )}
-                                                                    <Link href="/customer/Invoice" passHref>
-                                <button className="bg-gray-800 text-white px-4 py-1 rounded-md hover:scale-105 transition-transform">
-                                    View
-                                </button>
+                                <Link href="/customer/Invoice" passHref>
+                                    <button className="bg-gray-800 text-white px-4 py-1 rounded-md hover:scale-105 transition-transform">
+                                        View
+                                    </button>
                                 </Link>
                             </div>
                         </motion.div>
