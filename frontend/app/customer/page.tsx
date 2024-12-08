@@ -28,26 +28,41 @@
 
 "use client";
 
+// PurchaseHistoryDashboard.tsx
 import React, { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
+import PurchaseHistoryDashboardSkeleton from './PurchaseHistoryDashboardSkeleton';
 
 const PurchaseHistoryDashboard = () => {
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+    const [isLoading, setIsLoading] = useState(true); // Control loading state
     const closeTimeout = useRef(null);
 
-    const handleMouseEnter = () => {
-        clearTimeout(closeTimeout.current);
-        setIsDropdownOpen(true);
-    };
-
-    const handleMouseLeave = () => {
-        closeTimeout.current = setTimeout(() => setIsDropdownOpen(false), 200);
+    // Toggle dropdown on click instead of mouse hover
+    const handleToggleDropdown = () => {
+        if (isDropdownOpen) {
+            clearTimeout(closeTimeout.current);
+            setIsDropdownOpen(false);
+        } else {
+            setIsDropdownOpen(true);
+        }
     };
 
     useEffect(() => {
-        return () => clearTimeout(closeTimeout.current);
+        const timer = setTimeout(() => {
+            setIsLoading(false); // Assume data is loaded after some delay
+        }, 2000);
+
+        return () => {
+            clearTimeout(timer);
+            clearTimeout(closeTimeout.current);
+        };
     }, []);
+
+    if (isLoading) {
+        return <PurchaseHistoryDashboardSkeleton />;
+    }
 
     const orderSummary = {
         totalOrders: 42,
@@ -63,7 +78,7 @@ const PurchaseHistoryDashboard = () => {
     return (
         <div className="relative bg-gray-100" style={{ paddingTop: '4rem' }}>
             <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
-
+            
             {/* Header Section */}
             <div className="px-4 sm:px-6 py-2 flex items-center fixed top-0 left-0 right-0 z-50 bg-gray-100">
                 <div className="flex items-center space-x-2 text-lg font-bold">
@@ -73,9 +88,8 @@ const PurchaseHistoryDashboard = () => {
                     </span>
                 </div>
                 <div
-                    onMouseEnter={handleMouseEnter}
-                    onMouseLeave={handleMouseLeave}
                     className="ml-auto"
+                    onClick={handleToggleDropdown}
                 >
                     <div className="p-2 rounded-full bg-white hover:bg-gray-100 cursor-pointer">
                         <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">

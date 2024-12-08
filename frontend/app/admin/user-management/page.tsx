@@ -35,6 +35,7 @@ import usePagination from "./usePagination";
 import { motion } from "framer-motion";
 import EditModal from './editModal';
 import AddUserModal from './AddUserModal'; 
+import TableSkeleton from "@/app/inventory/suppliers/TableSkeleton";
 
 const UserManagement = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -42,13 +43,24 @@ const UserManagement = () => {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);  
   const [selectedUser, setSelectedUser] = useState(null);
+  const [users, setUsers] = useState([]);
+  const [isLoading, setIsLoading] = useState(true); // Add isLoading state
 
   useEffect(() => {
     localStorage.clear(); 
     console.log('Local storage cleared on page reload.');
   }, []);
 
-  const [users, setUsers] = useState(usersData);
+  useEffect(() => {
+    // Simulate data fetching
+    const timer = setTimeout(() => {
+      setUsers(usersData);
+      setIsLoading(false);
+    }, 2000); // 2 seconds delay
+
+    return () => clearTimeout(timer);
+  }, []);
+
   const filteredUsers = searchUsers(users, searchTerm);
   const { currentPage, totalPages, changePage, indexOfFirstItem, indexOfLastItem } = usePagination(filteredUsers.length, 8);
   const currentItems = filteredUsers.slice(indexOfFirstItem, indexOfLastItem);
@@ -59,7 +71,7 @@ const UserManagement = () => {
   };
 
   const handleDeleteConfirm = () => {
-    const updatedUsers = users.filter(user => user !== selectedUser);
+    const updatedUsers = users.filter(u => u !== selectedUser);
     setUsers(updatedUsers);
     setIsModalOpen(false);
     setSelectedUser(null);
@@ -76,7 +88,7 @@ const UserManagement = () => {
   };
 
   const handleSaveChanges = (updatedUser) => {
-    const updatedUsers = users.map(user => user.email === updatedUser.email ? updatedUser : user);
+    const updatedUsers = users.map(u => u.email === updatedUser.email ? updatedUser : u);
     setUsers(updatedUsers);
     setIsEditModalOpen(false);
   };
@@ -102,111 +114,118 @@ const UserManagement = () => {
         transition={{ duration: 0.3, ease: "easeOut" }}
       >
         <div className="bg-white shadow-lg rounded-xl p-6">
-          <div className="flex items-center justify-between mb-4">
-            <h1 className="text-2xl font-bold text-black">User Management</h1>
-            <div className="flex items-center space-x-4">
-              <div className="relative">
-                <span className="absolute inset-y-0 left-0 flex items-center pl-3">
-                  <MagnifyingGlassIcon className="h-5 w-5 text-gray-400" />
-                </span>
-                <input
-                  type="text"
-                  placeholder="Search"
-                  className="input input-bordered w-full max-w-xs pl-10 bg-gray-50 text-black placeholder-gray-400"
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                />
+          {isLoading ? (
+            <TableSkeleton />
+          ) : (
+            <>
+              <div className="flex flex-col md:flex-row items-center justify-between mb-4">
+                  <h1 className="text-xl md:text-2xl font-bold text-black">User Management</h1>
+                  <div className="flex flex-col md:flex-row items-center space-y-2 md:space-y-0 space-x-0 md:space-x-4 mt-4 md:mt-0">
+                      <div className="relative w-full md:max-w-xs">
+                          <span className="absolute inset-y-0 left-0 flex items-center pl-3">
+                              <MagnifyingGlassIcon className="h-5 w-5 text-gray-400" />
+                          </span>
+                          <input
+                              type="text"
+                              placeholder="Search"
+                              className="input input-bordered w-full pl-10 bg-gray-50 text-black placeholder-gray-400"
+                              value={searchTerm}
+                              onChange={e => setSearchTerm(e.target.value)}
+                          />
+                      </div>
+                      <button className="btn btn-outline w-full md:w-auto text-black bg-gray-50 border-gray-300 hover:bg-gray-100" onClick={() => setIsAddModalOpen(true)}>Add User</button>
+                  </div>
               </div>
-              <button className="btn btn-outline text-black bg-gray-50 border-gray-300 hover:bg-gray-100" onClick={() => setIsAddModalOpen(true)}>Add User</button>
-            </div>
-          </div>
 
-          <div className="overflow-x-auto">
-            <table className="table w-full border-separate border-spacing-y-2">
-              <thead>
-                <tr className="bg-gray-100 text-gray-700">
-                  <th className="py-2 px-4 rounded-l-lg">User Name</th>
-                  <th className="py-2 px-4">Email</th>
-                  <th className="py-2 px-4">Role</th>
-                  <th className="py-2 px-4 rounded-r-lg text-right">Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {currentItems.length > 0 ? (
-                  currentItems.map((user, index) => (
-                    <tr key={index} className="bg-white hover:bg-gray-50 shadow-sm rounded-lg">
-                      <td className="py-3 px-4 text-black">{user.name}</td>
-                      <td className="py-3 px-4 text-black">{user.email}</td>
-                      <td className="py-3 px-4 text-black">{user.role}</td>
-                      <td className="py-3 px-4 text-right space-x-2">
-                        <button className="text-gray-500 hover:text-gray-700" onClick={() => handleEditClick(user)}>Edit</button>
-                        <button className="text-gray-500 hover:text-gray-700" onClick={() => handleDeleteClick(user)}>Delete</button>
-                      </td>
+              <div className="overflow-x-auto">
+                <table className="table w-full border-separate border-spacing-y-2">
+                  <thead>
+                    <tr className="bg-gray-100 text-gray-700">
+                      <th className="py-2 px-4 rounded-l-lg">User Name</th>
+                      <th className="py-2 px-4">Email</th>
+                      <th className="py-2 px-4">Role</th>
+                      <th className="py-2 px-4 rounded-r-lg text-right">Actions</th>
                     </tr>
-                  ))
-                ) : (
-                  <tr>
-                    <td colSpan={4} className="text-center text-xl font-bold py-8 text-black">No users found...</td>
-                  </tr>
-                )}
-              </tbody>
-            </table>
-          </div>
+                  </thead>
+                  <tbody>
+                    {currentItems.length > 0 ? (
+                      currentItems.map((user, index) => (
+                        <tr key={index} className="bg-white hover:bg-gray-50 shadow-sm rounded-lg">
+                          <td className="py-3 px-4 text-black">{user.name}</td>
+                          <td className="py-3 px-4 text-black">{user.email}</td>
+                          <td className="py-3 px-4 text-black">{user.role}</td>
+                          <td className="py-3 px-4 text-right space-x-2">
+                            <button className="text-gray-500 hover:text-gray-700" onClick={() => handleEditClick(user)}>Edit</button>
+                            <button className="text-gray-500 hover:text-gray-700" onClick={() => handleDeleteClick(user)}>Delete</button>
+                          </td>
+                        </tr>
+                      ))
+                    ) : (
+                      <tr>
+                        <td colSpan={4} className="text-center text-xl font-bold py-8 text-black">No users found...</td>
+                      </tr>
+                    )}
+                  </tbody>
+                </table>
+              </div>
 
-          <div className="flex justify-between items-center mt-6 text-sm text-gray-500">
-            <span>Showing {indexOfFirstItem + 1} to {Math.min(indexOfLastItem, filteredUsers.length)} of {filteredUsers.length} Users</span>
-            <div className="flex items-center space-x-2">
-              <button onClick={() => changePage(currentPage - 1)} disabled={currentPage === 1} className="btn btn-sm bg-gray-100 text-gray-600 hover:bg-gray-200 w-8 h-8 rounded-md">{"←"}</button>
-              {[...Array(totalPages)].map((_, i) => (
-                <button
-                  key={i}
-                  onClick={() => changePage(i + 1)}
-                  className={`btn btn-sm w-8 h-8 rounded-md ${currentPage === i + 1 ? 'bg-gray-900 text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'}`}
-                >
-                  {i + 1}
-                </button>
-              ))}
-              <button onClick={() => changePage(currentPage + 1)} disabled={currentPage === totalPages} className="btn btn-sm bg-gray-100 text-gray-600 hover:bg-gray-200 w-8 h-8 rounded-md">{"→"}</button>
-            </div>
-          </div>
-
-          {/* Modals */}
-          {isModalOpen && (
-            <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
-              <div className="bg-white p-4 rounded-lg shadow-xl">
-                <h2 className="text-lg font-semibold text-black">Confirm Delete User</h2>
-                <p className="my-4 text-gray-500">Once you delete this user, the action cannot be undone, and all related data will be permanently lost.</p>
-                <div className="flex justify-end space-x-4">
-                  <button onClick={handleCancel} className="hover:bg-gray-100 text-black font-semibold py-2 px-4 rounded border border-gray-300">
-                    Cancel
-                  </button>
-                  <button onClick={handleDeleteConfirm} className="hover:bg-gray-900 text-white font-semibold py-2 px-4 rounded bg-black">
-                    Delete User
-                  </button>
+              <div className="flex justify-between items-center mt-6 text-sm text-gray-500">
+                <span>Showing {indexOfFirstItem + 1} to {Math.min(indexOfLastItem, filteredUsers.length)} of {filteredUsers.length} Users</span>
+                <div className="flex items-center space-x-2">
+                  <button onClick={() => changePage(currentPage - 1)} disabled={currentPage === 1} className="btn btn-sm bg-gray-100 text-gray-600 hover:bg-gray-200 w-8 h-8 rounded-md">{"←"}</button>
+                  {[...Array(totalPages)].map((_, i) => (
+                    <button
+                      key={i}
+                      onClick={() => changePage(i + 1)}
+                      className={`btn btn-sm w-8 h-8 rounded-md ${currentPage === i + 1 ? 'bg-gray-900 text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'}`}
+                    >
+                      {i + 1}
+                    </button>
+                  ))}
+                  <button onClick={() => changePage(currentPage + 1)} disabled={currentPage === totalPages} className="btn btn-sm bg-gray-100 text-gray-600 hover:bg-gray-200 w-8 h-8 rounded-md">{"→"}</button>
                 </div>
               </div>
-            </div>
-          )}
 
-          {isEditModalOpen && selectedUser && (
-            <EditModal
-              user={selectedUser}
-              isOpen={isEditModalOpen}
-              onClose={() => setIsEditModalOpen(false)}
-              onSave={handleSaveChanges}
-            />
-          )}
+              {/* Delete Confirmation Modal */}
+              {isModalOpen && (
+                <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
+                  <div className="bg-white p-4 rounded-lg shadow-xl">
+                    <h2 className="text-lg font-semibold text-black">Confirm Delete User</h2>
+                    <p className="my-4 text-gray-500">Once you delete this user, the action cannot be undone, and all related data will be permanently lost.</p>
+                    <div className="flex justify-end space-x-4">
+                      <button onClick={handleCancel} className="hover:bg-gray-100 text-black font-semibold py-2 px-4 rounded border border-gray-300">
+                        Cancel
+                      </button>
+                      <button onClick={handleDeleteConfirm} className="hover:bg-gray-900 text-white font-semibold py-2 px-4 rounded bg-black">
+                        Delete User
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              )}
 
-          {isAddModalOpen && (
-            <AddUserModal
-              isOpen={isAddModalOpen}
-              onClose={() => setIsAddModalOpen(false)}
-              onSave={handleAddUser}
-            />
+              {/* Edit Modal */}
+              {isEditModalOpen && selectedUser && (
+                <EditModal
+                  user={selectedUser}
+                  isOpen={isEditModalOpen}
+                  onClose={() => setIsEditModalOpen(false)}
+                  onSave={handleSaveChanges}
+                />
+              )}
+
+              {/* Add Modal */}
+              {isAddModalOpen && (
+                <AddUserModal
+                  isOpen={isAddModalOpen}
+                  onClose={() => setIsAddModalOpen(false)}
+                  onSave={handleAddUser}
+                />
+              )}
+            </>
           )}
         </div>
       </motion.div>
-
   );
 };
 
