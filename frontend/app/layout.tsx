@@ -28,8 +28,8 @@ export default function RootLayout({
     <html lang="en">
        <Head>
         <title>POSitiveFlow</title>
-        <link rel="icon" href="/logo.png" />
-      </Head>
+        <link rel="icon" href="/favicon.ico" />
+        </Head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
