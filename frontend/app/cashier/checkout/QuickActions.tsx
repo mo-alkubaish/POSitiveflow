@@ -19,35 +19,34 @@
  * This component streamlines access to commonly used actions within the POS system, enhancing cashier efficiency.
  */
 
-
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';  
 import { useDiscount } from './DiscountContext';
 import discountsData from '../../data/discounts.json';
+import AddCustomerModal from '@/app/admin/customer-management/AddCustomerModal';
 
-const QuickActions = ({items}) => {
+const QuickActions = ({ items }) => {
     const [isDiscountModalOpen, setIsDiscountModalOpen] = useState(false);
+    const [isAddCustomerModalOpen, setIsAddCustomerModalOpen] = useState(false);  // State to toggle Add Customer Modal
     const [availableDiscounts, setAvailableDiscounts] = useState([]);
     const { setDiscount, discount } = useDiscount();
+    
     const calculateTotal = () => items.reduce((total, item) => total + (item.price * item.quantity), 0);
     const calculateVAT = (total) => total * 0.15;
-    const calculateDiscount = (total) => {
-        return parseFloat(discount); 
-    };
-
+    const calculateDiscount = (total) => parseFloat(discount);
     const subtotal = calculateTotal();
     const VAT = calculateVAT(subtotal);
-    const discountAmount = calculateDiscount(subtotal); 
+    const discountAmount = calculateDiscount(subtotal);
     const total = subtotal + VAT - discountAmount;
+
     const applyDiscount = (value, type) => {
         if (type === "Percentage") {
-            setDiscount((prev) => prev + value/100 * total);
+            setDiscount((prev) => prev + value / 100 * total);
         } else {
             setDiscount((prev) => value + prev);
         }
         console.log(`Discount of ${value} ${type} applied`);
-    }
-
+    };
 
     useEffect(() => {
         const today = new Date();
@@ -60,13 +59,15 @@ const QuickActions = ({items}) => {
     }, []);
 
     const handleApplyDiscountClick = () => setIsDiscountModalOpen(true);
-
     const handleDiscountSelect = (discount) => {
-        applyDiscount(
-            parseFloat(discount.value),
-            discount.type
-        );
+        applyDiscount(parseFloat(discount.value), discount.type);
         setIsDiscountModalOpen(false);
+    };
+    const handleAddCustomerClick = () => setIsAddCustomerModalOpen(true);  // Toggle customer modal open
+    const closeAddCustomerModal = () => setIsAddCustomerModalOpen(false);  // Close customer modal
+    const saveCustomer = (customer) => {
+        console.log('Customer saved:', customer);
+        closeAddCustomerModal();
     };
 
     return (
@@ -75,6 +76,9 @@ const QuickActions = ({items}) => {
             <div className="flex justify-between space-x-2">
                 <button className="btn bg-black text-white flex-grow" onClick={handleApplyDiscountClick}>
                     Apply Discount
+                </button>
+                <button className="btn bg-black text-white flex-grow" onClick={handleAddCustomerClick}>
+                    Add Customer
                 </button>
                 <Link href="/cashier/shift" passHref>
                     <button className="btn bg-black text-white flex-grow">
@@ -99,6 +103,13 @@ const QuickActions = ({items}) => {
                         </button>
                     </div>
                 </div>
+            )}
+            {isAddCustomerModalOpen && (
+                <AddCustomerModal
+                    isOpen={isAddCustomerModalOpen}
+                    onClose={closeAddCustomerModal}
+                    onSave={saveCustomer}
+                />
             )}
         </div>
     );
