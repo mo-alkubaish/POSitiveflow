@@ -14,13 +14,14 @@
  * This component provides an organized interface for managing store-level configurations in POSitiveFlow.
  */
 
-
+// Settings.tsx
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { motion } from 'framer-motion';
 import SettingsForm from "./settingsForm";
 import BackupSection from "./backupSection";
+import SettingsSkeletonLoading from "./SettingsSkeletonLoading";
 
 const Settings = () => {
   const [storeName, setStoreName] = useState("Ajjad Bakery");
@@ -29,38 +30,55 @@ const Settings = () => {
   const [stockThreshold, setStockThreshold] = useState(25);
   const [whatsappReceipts, setWhatsappReceipts] = useState(false);
   const [loyaltyPoints, setLoyaltyPoints] = useState(false);
+  const [isLoading, setIsLoading] = useState(true); // Add isLoading state
 
   const containerVariants = {
     hidden: { opacity: 0, y: 20 },
     visible: { opacity: 1, y: 0, transition: { delay: 0.0, duration: 0.3 } }
   };
 
-  return (
-      <motion.div
-        className="container mx-auto p-6"
-        variants={containerVariants}
-        initial="hidden"
-        animate="visible"
-      >
-        {/* Settings Form */}
-        <SettingsForm
-          storeName={storeName}
-          setStoreName={setStoreName}
-          currency={currency}
-          setCurrency={setCurrency}
-          defaultTaxRate={defaultTaxRate}
-          setDefaultTaxRate={setDefaultTaxRate}
-          stockThreshold={stockThreshold}
-          setStockThreshold={setStockThreshold}
-          whatsappReceipts={whatsappReceipts}
-          setWhatsappReceipts={setWhatsappReceipts}
-          loyaltyPoints={loyaltyPoints}
-          setLoyaltyPoints={setLoyaltyPoints}
-        />
+  useEffect(() => {
+    // Simulate data fetching
+    const timer = setTimeout(() => {
+      // Assume data is fetched and set here
+      setIsLoading(false);
+    }, 2000); // 2 seconds delay
 
-        {/* Backup Section */}
-        <BackupSection />
-      </motion.div>
+    return () => clearTimeout(timer);
+  }, []);
+
+  return (
+    <motion.div
+      className="container mx-auto p-6"
+      variants={containerVariants}
+      initial="hidden"
+      animate="visible"
+    >
+      {isLoading ? (
+        <SettingsSkeletonLoading />
+      ) : (
+        <>
+          {/* Settings Form */}
+          <SettingsForm
+            storeName={storeName}
+            setStoreName={setStoreName}
+            currency={currency}
+            setCurrency={setCurrency}
+            defaultTaxRate={defaultTaxRate}
+            setDefaultTaxRate={setDefaultTaxRate}
+            stockThreshold={stockThreshold}
+            setStockThreshold={setStockThreshold}
+            whatsappReceipts={whatsappReceipts}
+            setWhatsappReceipts={setWhatsappReceipts}
+            loyaltyPoints={loyaltyPoints}
+            setLoyaltyPoints={setLoyaltyPoints}
+          />
+
+          {/* Backup Section */}
+          <BackupSection />
+        </>
+      )}
+    </motion.div>
   );
 };
 

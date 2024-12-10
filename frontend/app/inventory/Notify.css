@@ -7,11 +7,14 @@
     display: none;
     position: absolute;
     background-color: #f9f9f9;
-    min-width: 350px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    min-width: 90%; /* Adjust width to fit smaller screens */
+    max-width: 350px; /* Cap the width for larger screens */
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
     z-index: 1;
-    right: 0;  /* Align the dropdown to the right */
-    left: auto; /* Override any left alignment */
+    right: 0; /* Align the dropdown to the right by default */
+    left: auto; /* Ensure left alignment is disabled */
+    border-radius: 8px; /* Add a smooth corner radius for aesthetics */
+    overflow: hidden; /* Prevent content overflow on smaller screens */
 }
 
 .dropdown-content a {
@@ -19,8 +22,18 @@
     padding: 12px 16px;
     text-decoration: none;
     display: block;
+    font-size: 14px; /* Adjust text size for readability on small screens */
 }
 
 .dropdown:hover .dropdown-content {
     display: block;
+}
+
+@media screen and (max-width: 768px) {
+    .dropdown-content {
+        right: auto; /* Disable right alignment for narrow screens */
+        left: 50%; /* Center align the dropdown */
+        transform: translateX(-50%); /* Ensure proper centering */
+        min-width: 90%; /* Take up most of the screen width */
+    }
 }

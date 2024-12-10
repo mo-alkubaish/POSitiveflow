@@ -1,13 +1,13 @@
 import React from 'react';
 
-const SupplierTableSkeleton = () => {
+const TableSkeleton = () => {
   return (
     <div className="animate-pulse">
       <div className="flex items-center justify-between mb-4">
         <div className="h-8 bg-gray-200 rounded w-1/3"></div>
         <div className="flex items-center space-x-4">
           <div className="h-10 bg-gray-200 rounded w-64"></div>
-          <div className="h-10 bg-gray-200 rounded w-32"></div>
+          <div className="h-10 bg-gray-200 rounded w-12"></div>
         </div>
       </div>
 
@@ -15,10 +15,10 @@ const SupplierTableSkeleton = () => {
         <table className="table w-full border-separate border-spacing-y-2">
           <thead>
             <tr className="bg-gray-100 text-gray-700">
-              <th className="py-2 px-4 rounded-l-lg">Supplier Name</th>
-              <th className="py-2 px-4">Phone Number</th>
-              <th className="py-2 px-4">Email</th>
-              <th className="py-2 px-4 rounded-r-lg text-right">Actions</th>
+              <th className="py-2 px-4 rounded-l-lg">.....</th>
+              <th className="py-2 px-4">.....</th>
+              <th className="py-2 px-4">....</th>
+              <th className="py-2 px-4 rounded-r-lg text-right">.....</th>
             </tr>
           </thead>
           <tbody>
@@ -57,4 +57,4 @@ const SupplierTableSkeleton = () => {
   );
 };
 
-export default SupplierTableSkeleton;
+export default TableSkeleton;
