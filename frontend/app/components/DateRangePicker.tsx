@@ -18,7 +18,6 @@
  * The component elegantly handles date selection within specified bounds and provides clear feedback on the selected range through formatted text displayed on the trigger button.
  */
 
-
 "use client"
 
 import * as React from "react"
@@ -56,9 +55,9 @@ export function DatePickerWithRange({
             id="date"
             variant={"outline"}
             className={cn(
-              "w-[300px] justify-start text-left font-normal text-white",
+              "w-[300px] justify-start text-left font-normal text-white bg-black",
               !date && "text-muted-foreground",
-              "hover:bg-gray-300"
+              "hover:bg-gray-800"
             )}
           >
             <CalendarIcon />
@@ -95,8 +94,8 @@ export function DatePickerWithRange({
               caption_label: "text-sm font-medium",
               nav: "space-x-1 flex items-center",
               nav_button: "h-7 w-7 bg-transparent p-0 opacity-50 hover:opacity-100 text-black",
-              nav_button_previous: "absolute left-1 text-black", // Change color here
-              nav_button_next: "absolute right-1 text-black", // Change color here
+              nav_button_previous: "absolute left-1 text-black",
+              nav_button_next: "absolute right-1 text-black",
               table: "w-full border-collapse space-y-1",
               head_row: "flex",
               head_cell: "text-black rounded-md w-9 font-normal text-[0.8rem]",

@@ -94,7 +94,7 @@ export default function Component() {
           <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
             <h1 className="text-xl font-bold sm:text-2xl">Sales and Inventory Reports</h1>
             <div className="w-full sm:w-auto">
-              <DatePickerWithRange date={date} setDate={setDate} maxDate={today} />
+              <DatePickerWithRange date={date} setDate={setDate} maxDate={today}/>
             </div>
           </div>
 

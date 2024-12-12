@@ -90,13 +90,13 @@ const Login = () => {
           </div>
           <div className="card-actions justify-center">
             <div className="flex flex-col gap-4">
-              <h1 className="card-title justify-center">Log in to your account</h1>
+              <h1 className="card-title justify-center text-black">Log in to your account</h1>
               <form onSubmit={handleLogin} className="flex flex-col gap-4">
-                <label className="input input-bordered flex items-center gap-2 btn-wide">
+                <label className="input input-bordered flex items-center gap-2 btn-wide text-black">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 16 16"
-                    fill="currentColor"
+                    fill="black"
                     className="h-4 w-4 opacity-70"
                   >
                     <path d="M2.5 3A1.5 1.5 0 0 0 1 4.5v.793c.026.009.051.02.076.032L7.674 8.51c.206.1.446.1.652 0l6.598-3.185A.755.755 0 0 1 15 5.293V4.5A1.5 1.5 0 0 0 13.5 3h-11Z" />
@@ -110,11 +110,11 @@ const Login = () => {
                     onChange={(e) => setEmail(e.target.value)}
                   />
                 </label>
-                <label className="input input-bordered flex items-center gap-2 btn-wide">
+                <label className="input input-bordered flex items-center gap-2 btn-wide text-black">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 16 16"
-                    fill="currentColor"
+                    fill="black"
                     className="h-4 w-4 opacity-70"
                   >
                     <path

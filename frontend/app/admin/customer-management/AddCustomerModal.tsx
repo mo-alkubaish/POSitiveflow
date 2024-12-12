@@ -20,7 +20,7 @@ type AddCustomerModalProps = {
 };
 
 const AddCustomerModal: React.FC<AddCustomerModalProps> = ({ isOpen, onClose, onSave }) => {
-  const [newCustomer, setNewCustomer] = useState<Customer>({ name: '', email: '', phoneNumber: '(966) ' });
+  const [newCustomer, setNewCustomer] = useState<Customer>({ name: '', email: '', phoneNumber: '' });
   const [errors, setErrors] = useState<{ [key: string]: string | null }>({ name: null, email: null, phoneNumber: null });
 
   if (!isOpen) return null;
