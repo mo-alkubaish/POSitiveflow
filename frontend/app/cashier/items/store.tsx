@@ -20,19 +20,17 @@ const Store = ({ selectedDraft }) => {
   const [selectedCategory, setSelectedCategory] = useState('');
   const [categories, setCategories] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
-  const [isLoading, setIsLoading] = useState(true); // Add isLoading state
+  const [isLoading, setIsLoading] = useState(true); 
 
-  // Effect for simulating data fetching
   useEffect(() => {
     const timer = setTimeout(() => {
       setProducts(productsData);
       setIsLoading(false);
-    }, 2000); // 2 seconds delay
+    }, 2000); 
 
     return () => clearTimeout(timer);
   }, []);
 
-  // Effect for categories calculation
   useEffect(() => {
     const uniqueCategories = new Set(products.map(product => product.category));
     setCategories([...uniqueCategories]);
@@ -75,14 +73,13 @@ const Store = ({ selectedDraft }) => {
 
   const handleCheckout = () => {
     if (currentCart.length === 0) {
-      // Optional: Show error/warning if cart is empty
       return;
     }
 
     const cartData = encodeURIComponent(JSON.stringify(currentCart));
-    router.push(`/cashier/checkout?cart=${cartData}`);
+    router.push(`/cashier/checkout?cart=${cartData}`); 
   };
-
+// we make it’s data into a URL-encoded string so  we pass it  as a query parameter.
   const updateQuantity = (productId, increment) => {
     const productIndex = currentCart.findIndex(item => item.id === productId);
     if (productIndex !== -1) {
@@ -172,7 +169,8 @@ const Store = ({ selectedDraft }) => {
               onChange={handleSearchChange}
             />
             <div className="mb-4 flex flex-wrap">
-              <button onClick={clearCategoryFilter} className={`m-1 btn ${!selectedCategory ? 'btn-active' : 'btn-outline'}`}>All Items</button>
+              <button onClick={clearCategoryFilter}
+               className={`m-1 btn ${!selectedCategory ? 'btn-active' : 'btn-outline'}`}>All Items</button>
               {categories.map(category => (
                 <button
                   key={category}

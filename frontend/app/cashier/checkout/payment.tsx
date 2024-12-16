@@ -67,6 +67,8 @@ const Payment = ({items}) => {
     const [showSplitDetails, setShowSplitDetails] = useState(false);
     const [numSplits, setNumSplits] = useState(2);
     const [splits, setSplits] = useState([]);
+
+    
     useEffect(() => {
         const splitAmount = +(total / numSplits).toFixed(2); // Round to 2 decimals
         const totalSplits = splitAmount * numSplits;

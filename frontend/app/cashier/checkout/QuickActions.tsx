@@ -23,11 +23,9 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';  
 import { useDiscount } from './DiscountContext';
 import discountsData from '../../data/discounts.json';
-import AddCustomerModal from '@/app/admin/customer-management/AddCustomerModal';
 
 const QuickActions = ({ items }) => {
     const [isDiscountModalOpen, setIsDiscountModalOpen] = useState(false);
-    const [isAddCustomerModalOpen, setIsAddCustomerModalOpen] = useState(false);  // State to toggle Add Customer Modal
     const [availableDiscounts, setAvailableDiscounts] = useState([]);
     const { setDiscount, discount } = useDiscount();
     
@@ -63,12 +61,6 @@ const QuickActions = ({ items }) => {
         applyDiscount(parseFloat(discount.value), discount.type);
         setIsDiscountModalOpen(false);
     };
-    const handleAddCustomerClick = () => setIsAddCustomerModalOpen(true);  // Toggle customer modal open
-    const closeAddCustomerModal = () => setIsAddCustomerModalOpen(false);  // Close customer modal
-    const saveCustomer = (customer) => {
-        console.log('Customer saved:', customer);
-        closeAddCustomerModal();
-    };
 
     return (
         <div className="bg-white shadow-lg rounded-xl p-4 text-black w-full text-xs">
@@ -76,9 +68,6 @@ const QuickActions = ({ items }) => {
             <div className="flex justify-between space-x-2">
                 <button className="btn bg-black text-white flex-grow" onClick={handleApplyDiscountClick}>
                     Apply Discount
-                </button>
-                <button className="btn bg-black text-white flex-grow" onClick={handleAddCustomerClick}>
-                    Add Customer
                 </button>
                 <Link href="/cashier/shift" passHref>
                     <button className="btn bg-black text-white flex-grow">
@@ -103,13 +92,6 @@ const QuickActions = ({ items }) => {
                         </button>
                     </div>
                 </div>
-            )}
-            {isAddCustomerModalOpen && (
-                <AddCustomerModal
-                    isOpen={isAddCustomerModalOpen}
-                    onClose={closeAddCustomerModal}
-                    onSave={saveCustomer}
-                />
             )}
         </div>
     );

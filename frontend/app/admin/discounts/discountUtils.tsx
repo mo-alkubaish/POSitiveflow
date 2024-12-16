@@ -10,7 +10,6 @@
 
 
 export const isNumeric = (value) => /^\d+$/.test(value);
-
 export const determineStatus = (startDate, endDate) => {
   const today = new Date();
   const start = new Date(startDate);
