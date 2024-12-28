@@ -49,7 +49,7 @@ const demoContent = {
     title: "Customer",
     description: "Access receipts, view purchase history, and participate in loyalty programs.",
     features: ["Receipts", "Loyalty Program", "Purchase History"],
-    link: "/customer"
+    link: "/customer/store"
   },
 };
 

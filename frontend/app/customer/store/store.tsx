@@ -7,6 +7,7 @@ import './animations.css';
 import { useRouter } from 'next/navigation';
 import ProductListSkeleton from './ProductListSkeleton';
 import CartSkeleton from './CartSkeleton';
+import Link from "next/link";
 
 const Store = ({ selectedDraft }) => {
   const router = useRouter();
@@ -71,8 +72,6 @@ const Store = ({ selectedDraft }) => {
     }));
   };
 
-  // Removed the handleCheckout function and its logic.
-
   const updateQuantity = (productId, increment) => {
     const productIndex = currentCart.findIndex(item => item.id === productId);
     if (productIndex !== -1) {
@@ -89,10 +88,16 @@ const Store = ({ selectedDraft }) => {
     }
   };
 
+  // Calculate subtotal, tax, and total.
   const calculateSubtotal = () =>
     currentCart.reduce((total, item) => total + item.price * item.quantity, 0);
 
   const calculateTax = (subtotal) => subtotal * 0.1;
+  
+  const calculateTotal = () => {
+    const subtotal = calculateSubtotal();
+    return subtotal + calculateTax(subtotal);
+  };
 
   const handleCategoryFilter = (category) => setSelectedCategory(category);
   const clearCategoryFilter = () => setSelectedCategory('');
@@ -152,12 +157,20 @@ const Store = ({ selectedDraft }) => {
             <div className="mt-4 shadow-md p-4 rounded">
               <div>Subtotal: ${calculateSubtotal().toFixed(2)}</div>
               <div>Tax: ${calculateTax(calculateSubtotal()).toFixed(2)}</div>
-              <div>Total: ${(calculateSubtotal() + calculateTax(calculateSubtotal())).toFixed(2)}</div>
+              <div>Total: ${calculateTotal().toFixed(2)}</div>
               
-              {/* Checkout Button (logic removed) */}
-              <button className="mt-4 px-6 py-2 bg-black text-white rounded-full btn w-full">
-                Pay
-              </button>
+              {/* Pass the total via URL query to the pay page */}
+              <Link
+                href={{
+                  pathname: '/customer/store/pay',
+                  query: { total: calculateTotal().toFixed(2) },
+                }}
+                passHref
+              >
+                <button className="mt-4 px-6 py-2 bg-black text-white rounded-full btn w-full">
+                  Pay
+                </button>
+              </Link>
             </div>
           </>
         )}
