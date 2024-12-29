@@ -1,13 +1,16 @@
+
 "use client";
 
 import React, { useState, useEffect } from 'react';
 import productsData from '../../data/products.json';
 import { motion, AnimatePresence } from 'framer-motion';
-import './animations.css'; 
+import './animations.css';
 import { useRouter } from 'next/navigation';
 import ProductListSkeleton from './ProductListSkeleton';
 import CartSkeleton from './CartSkeleton';
 import Link from "next/link";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faShoppingCart } from '@fortawesome/free-solid-svg-icons';
 
 const Store = ({ selectedDraft }) => {
   const router = useRouter();
@@ -21,13 +24,13 @@ const Store = ({ selectedDraft }) => {
   const [selectedCategory, setSelectedCategory] = useState('');
   const [categories, setCategories] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
-  const [isLoading, setIsLoading] = useState(true); 
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const timer = setTimeout(() => {
       setProducts(productsData);
       setIsLoading(false);
-    }, 2000); 
+    }, 2000);
 
     return () => clearTimeout(timer);
   }, []);
@@ -88,12 +91,11 @@ const Store = ({ selectedDraft }) => {
     }
   };
 
-  // Calculate subtotal, tax, and total.
   const calculateSubtotal = () =>
     currentCart.reduce((total, item) => total + item.price * item.quantity, 0);
 
   const calculateTax = (subtotal) => subtotal * 0.1;
-  
+
   const calculateTotal = () => {
     const subtotal = calculateSubtotal();
     return subtotal + calculateTax(subtotal);
@@ -103,7 +105,7 @@ const Store = ({ selectedDraft }) => {
   const clearCategoryFilter = () => setSelectedCategory('');
   const handleSearchChange = (event) => setSearchTerm(event.target.value.toLowerCase());
 
-  const filteredProducts = products.filter((product) => 
+  const filteredProducts = products.filter((product) =>
     (!selectedCategory || product.category === selectedCategory) &&
     (!searchTerm || product.name.toLowerCase().includes(searchTerm) || product.sku.toLowerCase().includes(searchTerm))
   );
@@ -158,8 +160,7 @@ const Store = ({ selectedDraft }) => {
               <div>Subtotal: ${calculateSubtotal().toFixed(2)}</div>
               <div>Tax: ${calculateTax(calculateSubtotal()).toFixed(2)}</div>
               <div>Total: ${calculateTotal().toFixed(2)}</div>
-              
-              {/* Pass the total via URL query to the pay page */}
+
               <Link
                 href={{
                   pathname: '/customer/store/pay',
@@ -183,12 +184,6 @@ const Store = ({ selectedDraft }) => {
         ) : (
           <>
             <h2 className="text-xl font-bold mb-4">Available Items</h2>
-            <input
-              type="search"
-              placeholder="Search for items..."
-              className="input input-bordered w-full mb-4"
-              onChange={handleSearchChange}
-            />
             <div className="mb-4 flex flex-wrap">
               <button
                 onClick={clearCategoryFilter}
@@ -206,6 +201,17 @@ const Store = ({ selectedDraft }) => {
                 </button>
               ))}
             </div>
+            <div className="flex justify-between items-center mb-4">
+              <input
+                type="search"
+                placeholder="Search for items..."
+                className="input input-bordered w-full mr-4"
+                onChange={handleSearchChange}
+              />
+<button className="btn bg-black text-white">
+  <FontAwesomeIcon icon={faShoppingCart} /> Scan to Cart
+</button>
+</div>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
               {filteredProducts.map((product) => (
                 <motion.div
