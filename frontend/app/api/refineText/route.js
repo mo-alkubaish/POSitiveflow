@@ -1,7 +1,8 @@
 import { NextResponse } from 'next/server';
-import OpenAI from 'openai';
+import { GoogleGenerativeAI } from '@google/generative-ai';
 
 function getBackupCompletion(ocrText) {
+  console.log('🔄 Using backup completion method');
   const searchText = ocrText.toLowerCase();
   const refinedText = [];
 
@@ -10,12 +11,9 @@ function getBackupCompletion(ocrText) {
     'caramelized sesame': 'Caramelized Sesame',
     'zattar': 'Zattar',
     'cinnabon': 'Cinnabon',
-    'coffee': 'Coffee - Beverages',
-    'chesse pizza': 'Margherita Pizza',
     'pizza': 'Margherita Pizza',
   };
 
-  // Split the searchText into components if it has multiple items
   const words = searchText.split(', ');
 
   words.forEach(word => {
@@ -27,13 +25,13 @@ function getBackupCompletion(ocrText) {
       }
     });
     if (!found) {
-      refinedText.push(word); // Push the original word if no match is found
+      refinedText.push(word);
     }
   });
 
-  return refinedText.join(', '); // Join the refined text with commas if there are multiple items
+  console.log('✅ Backup completion result:', refinedText.join(', '));
+  return refinedText.join(', ');
 }
-
 
 export async function POST(request) {
   if (request.method === 'OPTIONS') {
@@ -45,54 +43,65 @@ export async function POST(request) {
     const { ocrText } = body;
 
     if (!ocrText) {
+      console.log('❌ Error: No OCR text provided');
       return NextResponse.json(
         { error: 'OCR text is required' },
         { status: 400 }
       );
     }
 
-    const openai = new OpenAI({
-      apiKey: process.env.OPENAI_API_KEY,
-    });
+    console.log('📝 Processing OCR text:', ocrText);
 
+    const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+    
     try {
-      const completion = await openai.chat.completions.create({
-        model: "gpt-3.5-turbo",
-        messages: [
-          {
-            role: "system",
-            content: "You are an AI that helps refine OCR text, which may contain spelling errors, and match it with a product catalog. Keep responses short and precise."
-          },
-          {
-            role: "user",
-            content: `OCR Text: "${ocrText}". Please correct any spelling errors and return suggestions in 10 words or less.`
-          }
-        ],
-        max_tokens: 20,  // Limit response size to reduce token usage
-        temperature: 0.3 // More deterministic responses
-      });
+      console.log('🤖 Attempting to use Google Gemini API');
       
+      const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+
+      const prompt = `
+System: You are a product text refinement system. Your task is to:
+1. Correct any spelling errors in the text
+2. If you see any variations of these items, replace them with the correct product name:
+   - Any spelling of "pizza" → "Margherita Pizza"
+   - Any spelling of "cheese" → "Cheese"
+   - Any spelling of "caramelized sesame" → "Caramelized Sesame"
+   - Any spelling of "zattar" or "zatar" → "Zattar"
+   - Any spelling of "cinnabon" → "Cinnabon"
+3. For all other text, just correct the spelling
+4. Maintain the original format (if items were comma-separated, keep them comma-separated)
+5. Return ONLY the corrected text without any explanations
+
+Input: "${ocrText}"
+Output format: Just the corrected text, maintaining original separators (commas, etc.)`;
+
+      const result = await model.generateContent(prompt);
+      const response = await result.response;
+      const text = response.text();
+
+      console.log('✨ Successfully processed with Gemini:', text);
 
       return NextResponse.json({
-        refinedText: completion.choices[0].message.content,
+        refinedText: text,
         status: 'success',
+        processingMethod: 'gemini'
       });
 
-    } catch (openaiError) {
-      console.error('OpenAI API Error:', openaiError);
+    } catch (geminiError) {
+      console.error('❌ Gemini API Error:', geminiError);
 
-      // Use local text matching if OpenAI fails
       const backupText = getBackupCompletion(ocrText);
 
       return NextResponse.json({
         refinedText: backupText,
         status: 'fallback',
-        message: 'Using fallback text processing'
+        message: 'Using fallback text processing',
+        processingMethod: 'backup'
       });
     }
 
   } catch (error) {
-    console.error('Server Error:', error);
+    console.error('❌ Server Error:', error);
     return NextResponse.json(
       { error: error.message || 'Error processing text' },
       { status: 500 }
