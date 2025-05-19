@@ -1,36 +1,22 @@
+# POSitiveFlow Backend
+
 <p align="center">
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
 </p>
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
-
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
-
 ## Description
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+POSitiveFlow backend is built using [Nest](https://github.com/nestjs/nest) framework, a progressive Node.js framework for building efficient and scalable server-side applications. This backend serves as the API for the POSitiveFlow Point of Sale system.
 
 ## Project setup
 
 ```bash
 $ npm install
 ```
+
+## Database Configuration
+
+The project uses MikroORM for database operations. The configuration can be found in `src/mikro-orm.config.ts`. Make sure to set up your database and update the configuration file with your database credentials.
 
 ## Compile and run the project
 
@@ -58,42 +44,220 @@ $ npm run test:e2e
 $ npm run test:cov
 ```
 
+## API Documentation
+
+The POSitiveFlow API is organized around REST principles. It accepts form-encoded request bodies, returns JSON-encoded responses, and uses standard HTTP response codes and authentication.
+
+### Authentication
+
+The API uses JWT (JSON Web Tokens) for authentication.
+
+#### Endpoints
+
+`POST /api/auth/login` - Authenticate a user and get a token
+- Request Body: `{ "email": "user@example.com", "password": "password" }` OR `{ "phone": "+1234567890", "password": "password" }`
+- Response: `{ "access_token": "eyJhbGciOiJIUzI1NiIsInR..." }`
+
+`POST /api/auth/logout` - Logout and invalidate token
+- Headers: `Authorization: Bearer YOUR_TOKEN`
+- Response: `{ "message": "Logout successful" }`
+
+### Users
+
+User management endpoints.
+
+#### Endpoints
+
+`GET /api/users` - List all users (Admin only)
+- Headers: `Authorization: Bearer YOUR_TOKEN`
+- Response: Array of user objects
+
+`GET /api/users/:id` - Get a specific user
+- Headers: `Authorization: Bearer YOUR_TOKEN`
+- Response: User object
+
+`POST /api/users` - Create a new user (Admin only)
+- Headers: `Authorization: Bearer YOUR_TOKEN`
+- Request Body: User object
+- Response: Created user object
+
+`PATCH /api/users/:id` - Update a user (Admin or own account)
+- Headers: `Authorization: Bearer YOUR_TOKEN`
+- Request Body: Partial user object
+- Response: Updated user object
+
+`DELETE /api/users/:id` - Delete a user (Admin only)
+- Headers: `Authorization: Bearer YOUR_TOKEN`
+- Response: `{ "message": "User deleted" }`
+
+### Items (Products)
+
+Inventory management endpoints.
+
+#### Endpoints
+
+`GET /api/items` - List all items
+- Headers: `Authorization: Bearer YOUR_TOKEN`
+- Query Parameters: `page`, `limit`, `search`, `category`
+- Response: Array of item objects
+
+`GET /api/items/:id` - Get a specific item
+- Headers: `Authorization: Bearer YOUR_TOKEN`
+- Response: Item object
+
+`POST /api/items` - Create a new item (Admin/Inventory Manager only)
+- Headers: `Authorization: Bearer YOUR_TOKEN`
+- Request Body: Item object
+- Response: Created item object
+
+`PATCH /api/items/:id` - Update an item (Admin/Inventory Manager only)
+- Headers: `Authorization: Bearer YOUR_TOKEN`
+- Request Body: Partial item object
+- Response: Updated item object
+
+`DELETE /api/items/:id` - Delete an item (Admin/Inventory Manager only)
+- Headers: `Authorization: Bearer YOUR_TOKEN`
+- Response: `{ "message": "Item deleted" }`
+
+### Cart
+
+Shopping cart management endpoints.
+
+#### Endpoints
+
+`GET /api/cart` - Get current user's cart
+- Headers: `Authorization: Bearer YOUR_TOKEN`
+- Response: Cart object with items
+
+`POST /api/cart/items` - Add item to cart
+- Headers: `Authorization: Bearer YOUR_TOKEN`
+- Request Body: `{ "itemId": "123", "quantity": 2 }`
+- Response: Updated cart object
+
+`PATCH /api/cart/items/:itemId` - Update cart item
+- Headers: `Authorization: Bearer YOUR_TOKEN`
+- Request Body: `{ "quantity": 3 }`
+- Response: Updated cart object
+
+`DELETE /api/cart/items/:itemId` - Remove item from cart
+- Headers: `Authorization: Bearer YOUR_TOKEN`
+- Response: Updated cart object
+
+`POST /api/cart/checkout` - Checkout cart
+- Headers: `Authorization: Bearer YOUR_TOKEN`
+- Request Body: Checkout details
+- Response: Order confirmation
+
+### Suppliers
+
+Supplier management endpoints.
+
+#### Endpoints
+
+`GET /api/suppliers` - List all suppliers
+- Headers: `Authorization: Bearer YOUR_TOKEN`
+- Response: Array of supplier objects
+
+`GET /api/suppliers/:id` - Get a specific supplier
+- Headers: `Authorization: Bearer YOUR_TOKEN`
+- Response: Supplier object
+
+`POST /api/suppliers` - Create a new supplier (Admin/Inventory Manager only)
+- Headers: `Authorization: Bearer YOUR_TOKEN`
+- Request Body: Supplier object
+- Response: Created supplier object
+
+`PATCH /api/suppliers/:id` - Update a supplier (Admin/Inventory Manager only)
+- Headers: `Authorization: Bearer YOUR_TOKEN`
+- Request Body: Partial supplier object
+- Response: Updated supplier object
+
+`DELETE /api/suppliers/:id` - Delete a supplier (Admin/Inventory Manager only)
+- Headers: `Authorization: Bearer YOUR_TOKEN`
+- Response: `{ "message": "Supplier deleted" }`
+
+### Discounts
+
+Discount management endpoints.
+
+#### Endpoints
+
+`GET /api/discount` - List all discounts
+- Headers: `Authorization: Bearer YOUR_TOKEN`
+- Response: Array of discount objects
+
+`GET /api/discount/:id` - Get a specific discount
+- Headers: `Authorization: Bearer YOUR_TOKEN`
+- Response: Discount object
+
+`POST /api/discount` - Create a new discount (Admin only)
+- Headers: `Authorization: Bearer YOUR_TOKEN`
+- Request Body: Discount object
+- Response: Created discount object
+
+`PATCH /api/discount/:id` - Update a discount (Admin only)
+- Headers: `Authorization: Bearer YOUR_TOKEN`
+- Request Body: Partial discount object
+- Response: Updated discount object
+
+`DELETE /api/discount/:id` - Delete a discount (Admin only)
+- Headers: `Authorization: Bearer YOUR_TOKEN`
+- Response: `{ "message": "Discount deleted" }`
+
+## Project Structure
+
+The backend code is organized using Nest.js module structure:
+
+- **/src**: Main source directory
+  - **/auth**: Authentication module
+  - **/common**: Shared functionality
+    - **/cart**: Cart module
+    - **/discount**: Discount management
+    - **/items**: Product management
+  - **/users**: User management
+  - **/suppliers**: Supplier management
+  - **/settings**: System settings
+  - **/feedback**: Customer feedback
+  - **/exception-filters**: Error handling
+  - **/middlewares**: HTTP request middlewares
+
+## Error Handling
+
+The API returns standard HTTP status codes:
+
+- 200: Success
+- 201: Created
+- 400: Bad Request
+- 401: Unauthorized
+- 403: Forbidden
+- 404: Not Found
+- 422: Unprocessable Entity
+- 500: Server Error
+
+Error responses include a message field with details about the error.
+
 ## Deployment
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
-
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+When you're ready to deploy the POSitiveFlow backend to production, you can use the included Dockerfile:
 
 ```bash
-$ npm install -g mau
-$ mau deploy
+# Build the Docker image
+docker build -t positiveflow-backend .
+
+# Run the container
+docker run -p 3001:3001 positiveflow-backend
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+Alternatively, use Docker Compose from the project root directory:
 
-## Resources
-
-Check out a few resources that may come in handy when working with NestJS:
-
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+```bash
+docker-compose up -d
+```
 
 ## Support
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+For support or questions about the POSitiveFlow backend, please contact the development team listed in the main README.
 
 ## License
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+POSitiveFlow is [MIT licensed](LICENSE).
